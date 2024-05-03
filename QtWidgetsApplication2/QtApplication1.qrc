@@ -1,0 +1,10 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>img/earth-grid.png</file>
+    <file>img/pin.png</file>
+    <file>img/international.png</file>
+    <file>img/vecteezy_location-icon-with-one-gradient-color_.png</file>
+    <file>img/vecteezy_road-destination-location-icon-symbol_27501059.jpg</file>
+    <file>img/vecteezy_location-pointer-vector-ilustration_6139989.jpg</file>
+  </qresource>
+</RCC>

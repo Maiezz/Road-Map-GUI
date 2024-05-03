@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QtApplication1Class</class>
+ <widget class="QMainWindow" name="QtApplication1Class">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1531</width>
+    <height>863</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>QtApplication1</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+background-color: rgb(243, 243, 243);
+background-color: rgb(255, 255, 255);
+background-color:rgb(34, 34, 34)
+
+			</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QWidget" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1536</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+						background-color: rgb(53,50,84);
+						background-color: rgba(75, 0, 0, 200);
+						background-color: rgb(34,34,34);
+					</string>
+    </property>
+    <widget class="QLabel" name="label_10">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>20</y>
+       <width>91</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">
+							font-weight: 400;
+							font: 20pt &quot;Bahnschrift Condensed&quot;;</string>
+     </property>
+     <property name="text">
+      <string>Road-Map</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>31</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="QtApplication1.qrc">:/newPrefix/img/pin.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="loginButton">
+     <property name="geometry">
+      <rect>
+       <x>1410</x>
+       <y>30</y>
+       <width>91</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font-size: 16px;
+						border-radius: 5px;
+						border-width: 0.5px;
+						border-style: solid;
+						font-family: Medium, sans-serif;
+						border-color:  rgb(255,255,255);
+						background-color: rgb(34,34,34);
+						color: rgb(255, 255, 255);
+					   </string>
+     </property>
+     <property name="text">
+      <string>Log in</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="getstartedButton">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>600</y>
+      <width>331</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+						font-size: 16px;
+						border-radius: 10px;
+						border-width: 1px;
+						border-style: solid;
+						font-family: Medium, sans-serif;
+						border-color:  rgb(255,255,255);
+						background-color: rgb(34,34,34);
+						color: rgb(255, 255, 255);
+					</string>
+    </property>
+    <property name="text">
+     <string>Get Started Now !</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>240</y>
+      <width>49</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>210</y>
+      <width>331</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+						font-size: 80px;
+						letter-spacing: -.025em;
+						font-weight: 400;
+						font: 80pt &quot;Bahnschrift Condensed&quot;;
+						color: rgb(255,255,255);
+					</string>
+    </property>
+    <property name="text">
+     <string>Road Map</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>310</y>
+      <width>441</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+						font-size: 80px;
+						letter-spacing: -.025em;
+						font-weight: 400;
+						line-height: 1.17 !important;
+						font: 80pt &quot;Bahnschrift Condensed&quot;;
+						color: rgb(255,255,255);
+					</string>
+    </property>
+    <property name="text">
+     <string>Construction</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>440</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+						font: 16pt &quot;Arial Narrow&quot;;
+						color: rgb(75, 75, 75);
+					
+color: rgb(180, 180, 180);</string>
+    </property>
+    <property name="text">
+     <string>Welcome to Road-Map</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>470</y>
+      <width>461</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+						font: 16pt &quot;Arial Narrow&quot;;
+color: rgb(180, 180, 180);
+					</string>
+    </property>
+    <property name="text">
+     <string>your altimate tool for constructing and visualizing road maps </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>500</y>
+      <width>471</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+						font: 16pt &quot;Arial Narrow&quot;;
+color: rgb(180, 180, 180);
+					</string>
+    </property>
+    <property name="text">
+     <string>with our app, you can input cities connecting them with edges</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>530</y>
+      <width>341</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
+						font: 16pt &quot;Arial Narrow&quot;;
+color: rgb(180, 180, 180);
+					</string>
+    </property>
+    <property name="text">
+     <string>to create your own comprehensive road map</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>80</y>
+      <width>1536</width>
+      <height>3</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(75, 75, 75);</string>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Orientation::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>130</y>
+      <width>600</width>
+      <height>611</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="QtApplication1.qrc">:/newPrefix/img/international.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QStackedWidget" name="stackedWidget">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1531</width>
+      <height>861</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgba(34, 34, 34, 150);</string>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="page">
+     <widget class="QWidget" name="widget_2" native="true">
+      <property name="geometry">
+       <rect>
+        <x>550</x>
+        <y>200</y>
+        <width>430</width>
+        <height>400</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+border-radius: 30px;
+border: 2px solid;
+border-color: rgb(34,34,34);</string>
+      </property>
+      <widget class="QLabel" name="label_11">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>40</y>
+         <width>301</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(34,34,34);
+font: 700 25pt &quot;Segoe UI&quot;;
+border-color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="text">
+        <string>Create an Account</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>130</y>
+         <width>371</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font-size: 18px;
+border-radius: 10px;
+border-width: 1px;
+border-style: solid;
+font-family: Medium, sans-serif;
+border-color:  rgb(34,34,34);
+background-color:rgb(255, 255, 255);
+color: rgb(34,34,34);</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignCenter</set>
+       </property>
+       <property name="placeholderText">
+        <string>Username</string>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_2">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>190</y>
+         <width>371</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font-size: 18px;
+border-radius: 10px;
+border-width: 1px;
+border-style: solid;
+font-family: Medium, sans-serif;
+border-color:  rgb(34,34,34);
+background-color:rgb(255, 255, 255);
+color: rgb(34,34,34);</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignCenter</set>
+       </property>
+       <property name="placeholderText">
+        <string>Email</string>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_3">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>250</y>
+         <width>371</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font-size: 18px;
+border-radius: 10px;
+border-width: 1px;
+border-style: solid;
+font-family: Medium, sans-serif;
+border-color:  rgb(34,34,34);
+background-color:rgb(255, 255, 255);
+color: rgb(34,34,34);</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignCenter</set>
+       </property>
+       <property name="placeholderText">
+        <string>Password</string>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="signupButton">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>320</y>
+         <width>371</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font-size: 18px;
+border-radius: 10px;
+border-width: 1px;
+border-style: solid;
+font-family: Medium, sans-serif;
+border-color:  rgb(34,34,34);
+background-color:rgb(34,34,34);
+color: rgb(255,255,255);</string>
+       </property>
+       <property name="text">
+        <string>Sign up</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_2">
+     <widget class="QWidget" name="widget_2" native="true">
+      <property name="geometry">
+       <rect>
+        <x>550</x>
+        <y>200</y>
+        <width>430</width>
+        <height>400</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+					   background-color: rgb(255, 255, 255);
+					   border-radius: 30px;
+					   border: 2px solid;
+					   border-color: rgb(34,34,34);
+				   </string>
+      </property>
+      <widget class="QLabel" name="label_11">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>60</y>
+         <width>361</width>
+         <height>81</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">
+color: rgb(34,34,34);
+font: 700 25pt &quot;Segoe UI&quot;;
+border-color: rgb(255, 255, 255);
+					   </string>
+       </property>
+       <property name="text">
+        <string>Login to your Account</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>140</y>
+         <width>371</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">
+						   font-size: 18px;
+						   border-radius: 10px;
+						   border-width: 1px;
+						   border-style: solid;
+						   font-family: Medium, sans-serif;
+						   border-color:  rgb(34,34,34);
+						   background-color:rgb(255, 255, 255);
+						   color: rgb(34,34,34);
+					   </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignCenter</set>
+       </property>
+       <property name="placeholderText">
+        <string>Username</string>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_3">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>200</y>
+         <width>371</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">
+						   font-size: 18px;
+						   border-radius: 10px;
+						   border-width: 1px;
+						   border-style: solid;
+						   font-family: Medium, sans-serif;
+						   border-color:  rgb(34,34,34);
+						   background-color:rgb(255, 255, 255);
+						   color: rgb(34,34,34);
+					   </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignCenter</set>
+       </property>
+       <property name="placeholderText">
+        <string>Password</string>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="loginButton_2">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>270</y>
+         <width>371</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">
+						   font-size: 18px;
+						   border-radius: 10px;
+						   border-width: 1px;
+						   border-style: solid;
+						   font-family: Medium, sans-serif;
+						   border-color:  rgb(34,34,34);
+						   background-color:rgb(34,34,34);
+						   color: rgb(255,255,255);
+					   </string>
+       </property>
+       <property name="text">
+        <string>Log in</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+   </widget>
+   <zorder>label</zorder>
+   <zorder>label_2</zorder>
+   <zorder>label_3</zorder>
+   <zorder>getstartedButton</zorder>
+   <zorder>widget</zorder>
+   <zorder>label_5</zorder>
+   <zorder>label_6</zorder>
+   <zorder>label_8</zorder>
+   <zorder>label_9</zorder>
+   <zorder>line</zorder>
+   <zorder>label_7</zorder>
+   <zorder>stackedWidget</zorder>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="0"/>
+ <resources>
+  <include location="QtApplication1.qrc"/>
+ </resources>
+ <connections/>
+</ui>
