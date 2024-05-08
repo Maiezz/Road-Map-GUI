@@ -24,6 +24,9 @@ private:
     Ui::QtApplication1Class* ui;
     Mainwindow* mainwindow;  // Declare an instance of the new window
     QStackedWidget* stackedWidget;
+
+protected:
+    void closeEvent(QCloseEvent* event) override;
 };
 
 

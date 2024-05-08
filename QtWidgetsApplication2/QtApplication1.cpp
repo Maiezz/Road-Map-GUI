@@ -1,5 +1,9 @@
 // QtApplication1.cpp
 #include "QtApplication1.h"
+#include<QCloseEvent>
+#include<iostream>
+#include <QFile>
+#include <QTextStream>
 
 QtApplication1::QtApplication1(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::QtApplication1Class)
@@ -40,4 +44,11 @@ void QtApplication1::on_getstartedButton_clicked()
 void QtApplication1::on_signupButton_clicked()
 {
     stackedWidget->setCurrentIndex(1);
+}
+
+void QtApplication1::closeEvent(QCloseEvent* event)
+{
+ 
+
+    event->accept(); // Allow the window to close
 }
