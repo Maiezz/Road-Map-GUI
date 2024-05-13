@@ -1,0 +1,6 @@
+cairo,giza,2
+cairo,alex,4
+alex,cairo,4
+alex,giza,3
+giza,cairo,2
+giza,alex,3

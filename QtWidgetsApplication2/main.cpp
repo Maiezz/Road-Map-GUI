@@ -1,12 +1,27 @@
 #include "QtApplication1.h"
+#include "CountryGraph.h"
 #include <QtWidgets/QApplication>
 #include<iostream>
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-    QtApplication1 w;
+#include <GraphView.h>
 
-    w.showMaximized();
-    return a.exec();
+
+
+int main(int argc, char* argv[])
+{
+
+
+
+
+	QApplication a(argc, argv);
+
+	GraphViewClass w;
+
+	w.showFullScreen();
+
+	// QtApplication1 w;
+
+	// w.showMaximized();
+
+	return a.exec();
 }
 

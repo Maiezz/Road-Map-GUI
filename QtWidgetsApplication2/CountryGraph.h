@@ -2,11 +2,11 @@
 #include<unordered_map>
 #include<list>
 #include<string>
+#include <stack>
+#include <queue>
 #include<vector>
-#include <QGraphicsScene>
-#include <QGraphicsEllipseItem>
-#include <QGraphicsLineItem>
 using namespace std;
+
 struct edge
 {
 	string destination_city;
@@ -14,8 +14,11 @@ struct edge
 };
 class CountryGraph
 {
+
 	unordered_map<string, list<edge>>cities;
-	unordered_map<string, QPointF> cityPositions;
+	stack<pair<int, pair<string, list<edge>>>> undoStack;
+	stack<pair<int, pair<string, list<edge>>>> redoStack;
+
 public:
 	void AddCity(string city);
 	void AddEdge(string city_1, string city_2, int cost);
@@ -31,8 +34,17 @@ public:
 	int Write_Edges_InFiles();
 	int Read_Cities_FromFiles();
 	int Read_Edges_FromFiles();
-	CountryGraph prims(int&);
-
-	
-
+	queue<string> DFS(string start_city);
+	queue<string> BFS(string start);
+	queue<pair<string, edge>> Prims();
+	void dijkstra_algorithm(string start_city);
+	void Undo();
+	void Redo();
+	void ApplyUChanges(pair<int, pair<string, list<edge>>>&);
+	void ApplyRChanges(pair<int, pair<string, list<edge>>>&);
+	void ReAddCity(pair<string, list<edge>>&);
+	edge GetEdge(string city_1, string city_2);
+	bool applychanges;
+	unordered_map<string, list<edge>>& getCities();
+	vector<pair<string, edge>> getEdges();
 };
