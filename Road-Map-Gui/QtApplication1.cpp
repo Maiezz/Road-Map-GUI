@@ -48,7 +48,7 @@ void QtApplication1::on_signupButton_clicked()
 
 void QtApplication1::closeEvent(QCloseEvent* event)
 {
- 
+
 
     event->accept(); // Allow the window to close
 }

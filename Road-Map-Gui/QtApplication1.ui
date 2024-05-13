@@ -15,12 +15,12 @@
   </property>
   <property name="styleSheet">
    <string notr="true">
-	   background-color: rgb(243, 243, 243);
-	   background-color: rgb(255, 255, 255);
-background-color:rgb(34, 34, 34)
-	   
+				background-color: rgb(243, 243, 243);
+				background-color: rgb(255, 255, 255);
+				background-color:rgb(34, 34, 34)
 
-   </string>
+
+			</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QWidget" name="widget" native="true">
@@ -51,7 +51,8 @@ background-color:rgb(34, 34, 34)
      <property name="styleSheet">
       <string notr="true">
 							font-weight: 400;
-							font: 20pt &quot;Bahnschrift Condensed&quot;;</string>
+							font: 20pt &quot;Bahnschrift Condensed&quot;;
+						</string>
      </property>
      <property name="text">
       <string>Road-Map</string>
@@ -70,7 +71,7 @@ background-color:rgb(34, 34, 34)
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="QtApplication1.qrc">:/newPrefix/img/pin.png</pixmap>
+      <pixmap resource="Resource.qrc">:/img/img/pin.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -86,15 +87,16 @@ background-color:rgb(34, 34, 34)
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">font-size: 16px;
-						border-radius: 5px;
-						border-width: 0.5px;
-						border-style: solid;
-						font-family: Medium, sans-serif;
-						border-color:  rgb(255,255,255);
-						background-color: rgb(34,34,34);
-						color: rgb(255, 255, 255);
-					   </string>
+      <string notr="true">
+							font-size: 16px;
+							border-radius: 5px;
+							border-width: 0.5px;
+							border-style: solid;
+							font-family: Medium, sans-serif;
+							border-color:  rgb(255,255,255);
+							background-color: rgb(34,34,34);
+							color: rgb(255, 255, 255);
+						</string>
      </property>
      <property name="text">
       <string>Log in</string>
@@ -124,19 +126,6 @@ background-color:rgb(34, 34, 34)
     </property>
     <property name="text">
      <string>Get Started Now !</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>240</y>
-      <width>49</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
@@ -197,8 +186,9 @@ background-color:rgb(34, 34, 34)
      <string notr="true">
 						font: 16pt &quot;Arial Narrow&quot;;
 						color: rgb(75, 75, 75);
-					
-color: rgb(180, 180, 180);</string>
+
+						color: rgb(180, 180, 180);
+					</string>
     </property>
     <property name="text">
      <string>Welcome to Road-Map</string>
@@ -216,7 +206,7 @@ color: rgb(180, 180, 180);</string>
     <property name="styleSheet">
      <string notr="true">
 						font: 16pt &quot;Arial Narrow&quot;;
-color: rgb(180, 180, 180);
+						color: rgb(180, 180, 180);
 					</string>
     </property>
     <property name="text">
@@ -235,7 +225,7 @@ color: rgb(180, 180, 180);
     <property name="styleSheet">
      <string notr="true">
 						font: 16pt &quot;Arial Narrow&quot;;
-color: rgb(180, 180, 180);
+						color: rgb(180, 180, 180);
 					</string>
     </property>
     <property name="text">
@@ -254,7 +244,7 @@ color: rgb(180, 180, 180);
     <property name="styleSheet">
      <string notr="true">
 						font: 16pt &quot;Arial Narrow&quot;;
-color: rgb(180, 180, 180);
+						color: rgb(180, 180, 180);
 					</string>
     </property>
     <property name="text">
@@ -290,7 +280,7 @@ color: rgb(180, 180, 180);
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="QtApplication1.qrc">:/newPrefix/img/international.png</pixmap>
+     <pixmap resource="Resource.qrc">:/img/img/international.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -325,10 +315,12 @@ color: rgb(180, 180, 180);
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);
-border-radius: 30px;
-border: 2px solid;
-border-color: rgb(34,34,34);</string>
+       <string notr="true">
+								background-color: rgb(255, 255, 255);
+								border-radius: 30px;
+								border: 2px solid;
+								border-color: rgb(34,34,34);
+							</string>
       </property>
       <widget class="QLabel" name="label_11">
        <property name="geometry">
@@ -340,9 +332,11 @@ border-color: rgb(34,34,34);</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(34,34,34);
-font: 700 25pt &quot;Segoe UI&quot;;
-border-color: rgb(255, 255, 255);</string>
+        <string notr="true">
+									color: rgb(34,34,34);
+									font: 700 25pt &quot;Segoe UI&quot;;
+									border-color: rgb(255, 255, 255);
+								</string>
        </property>
        <property name="text">
         <string>Create an Account</string>
@@ -361,14 +355,16 @@ border-color: rgb(255, 255, 255);</string>
         <enum>Qt::FocusPolicy::ClickFocus</enum>
        </property>
        <property name="styleSheet">
-        <string notr="true">font-size: 18px;
-border-radius: 10px;
-border-width: 1px;
-border-style: solid;
-font-family: Medium, sans-serif;
-border-color:  rgb(34,34,34);
-background-color:rgb(255, 255, 255);
-color: rgb(34,34,34);</string>
+        <string notr="true">
+									font-size: 18px;
+									border-radius: 10px;
+									border-width: 1px;
+									border-style: solid;
+									font-family: Medium, sans-serif;
+									border-color:  rgb(34,34,34);
+									background-color:rgb(255, 255, 255);
+									color: rgb(34,34,34);
+								</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -393,14 +389,16 @@ color: rgb(34,34,34);</string>
         <enum>Qt::FocusPolicy::ClickFocus</enum>
        </property>
        <property name="styleSheet">
-        <string notr="true">font-size: 18px;
-border-radius: 10px;
-border-width: 1px;
-border-style: solid;
-font-family: Medium, sans-serif;
-border-color:  rgb(34,34,34);
-background-color:rgb(255, 255, 255);
-color: rgb(34,34,34);</string>
+        <string notr="true">
+									font-size: 18px;
+									border-radius: 10px;
+									border-width: 1px;
+									border-style: solid;
+									font-family: Medium, sans-serif;
+									border-color:  rgb(34,34,34);
+									background-color:rgb(255, 255, 255);
+									color: rgb(34,34,34);
+								</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -425,14 +423,16 @@ color: rgb(34,34,34);</string>
         <enum>Qt::FocusPolicy::ClickFocus</enum>
        </property>
        <property name="styleSheet">
-        <string notr="true">font-size: 18px;
-border-radius: 10px;
-border-width: 1px;
-border-style: solid;
-font-family: Medium, sans-serif;
-border-color:  rgb(34,34,34);
-background-color:rgb(255, 255, 255);
-color: rgb(34,34,34);</string>
+        <string notr="true">
+									font-size: 18px;
+									border-radius: 10px;
+									border-width: 1px;
+									border-style: solid;
+									font-family: Medium, sans-serif;
+									border-color:  rgb(34,34,34);
+									background-color:rgb(255, 255, 255);
+									color: rgb(34,34,34);
+								</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -454,14 +454,16 @@ color: rgb(34,34,34);</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">font-size: 18px;
-border-radius: 10px;
-border-width: 1px;
-border-style: solid;
-font-family: Medium, sans-serif;
-border-color:  rgb(34,34,34);
-background-color:rgb(34,34,34);
-color: rgb(255,255,255);</string>
+        <string notr="true">
+									font-size: 18px;
+									border-radius: 10px;
+									border-width: 1px;
+									border-style: solid;
+									font-family: Medium, sans-serif;
+									border-color:  rgb(34,34,34);
+									background-color:rgb(34,34,34);
+									color: rgb(255,255,255);
+								</string>
        </property>
        <property name="text">
         <string>Sign up</string>
@@ -481,11 +483,11 @@ color: rgb(255,255,255);</string>
       </property>
       <property name="styleSheet">
        <string notr="true">
-					   background-color: rgb(255, 255, 255);
-					   border-radius: 30px;
-					   border: 2px solid;
-					   border-color: rgb(34,34,34);
-				   </string>
+								background-color: rgb(255, 255, 255);
+								border-radius: 30px;
+								border: 2px solid;
+								border-color: rgb(34,34,34);
+							</string>
       </property>
       <widget class="QLabel" name="label_11">
        <property name="geometry">
@@ -498,10 +500,10 @@ color: rgb(255,255,255);</string>
        </property>
        <property name="styleSheet">
         <string notr="true">
-color: rgb(34,34,34);
-font: 700 25pt &quot;Segoe UI&quot;;
-border-color: rgb(255, 255, 255);
-					   </string>
+									color: rgb(34,34,34);
+									font: 700 25pt &quot;Segoe UI&quot;;
+									border-color: rgb(255, 255, 255);
+								</string>
        </property>
        <property name="text">
         <string>Login to your Account</string>
@@ -521,15 +523,15 @@ border-color: rgb(255, 255, 255);
        </property>
        <property name="styleSheet">
         <string notr="true">
-						   font-size: 18px;
-						   border-radius: 10px;
-						   border-width: 1px;
-						   border-style: solid;
-						   font-family: Medium, sans-serif;
-						   border-color:  rgb(34,34,34);
-						   background-color:rgb(255, 255, 255);
-						   color: rgb(34,34,34);
-					   </string>
+									font-size: 18px;
+									border-radius: 10px;
+									border-width: 1px;
+									border-style: solid;
+									font-family: Medium, sans-serif;
+									border-color:  rgb(34,34,34);
+									background-color:rgb(255, 255, 255);
+									color: rgb(34,34,34);
+								</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -555,15 +557,15 @@ border-color: rgb(255, 255, 255);
        </property>
        <property name="styleSheet">
         <string notr="true">
-						   font-size: 18px;
-						   border-radius: 10px;
-						   border-width: 1px;
-						   border-style: solid;
-						   font-family: Medium, sans-serif;
-						   border-color:  rgb(34,34,34);
-						   background-color:rgb(255, 255, 255);
-						   color: rgb(34,34,34);
-					   </string>
+									font-size: 18px;
+									border-radius: 10px;
+									border-width: 1px;
+									border-style: solid;
+									font-family: Medium, sans-serif;
+									border-color:  rgb(34,34,34);
+									background-color:rgb(255, 255, 255);
+									color: rgb(34,34,34);
+								</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -586,15 +588,15 @@ border-color: rgb(255, 255, 255);
        </property>
        <property name="styleSheet">
         <string notr="true">
-						   font-size: 18px;
-						   border-radius: 10px;
-						   border-width: 1px;
-						   border-style: solid;
-						   font-family: Medium, sans-serif;
-						   border-color:  rgb(34,34,34);
-						   background-color:rgb(34,34,34);
-						   color: rgb(255,255,255);
-					   </string>
+									font-size: 18px;
+									border-radius: 10px;
+									border-width: 1px;
+									border-style: solid;
+									font-family: Medium, sans-serif;
+									border-color:  rgb(34,34,34);
+									background-color:rgb(34,34,34);
+									color: rgb(255,255,255);
+								</string>
        </property>
        <property name="text">
         <string>Log in</string>
@@ -603,7 +605,6 @@ border-color: rgb(255, 255, 255);
      </widget>
     </widget>
    </widget>
-   <zorder>label</zorder>
    <zorder>label_2</zorder>
    <zorder>label_3</zorder>
    <zorder>getstartedButton</zorder>
@@ -620,6 +621,7 @@ border-color: rgb(255, 255, 255);
  </widget>
  <layoutdefault spacing="6" margin="0"/>
  <resources>
+  <include location="Resource.qrc"/>
   <include location="QtApplication1.qrc"/>
  </resources>
  <connections/>

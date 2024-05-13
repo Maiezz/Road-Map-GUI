@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>img/pin2.png</file>
+        <file>img/pin.png</file>
+        <file>img/international.png</file>
+    </qresource>
+</RCC>

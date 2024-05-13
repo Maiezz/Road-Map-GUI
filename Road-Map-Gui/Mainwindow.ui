@@ -76,7 +76,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="QtApplication1.qrc">:/newPrefix/img/pin.png</pixmap>
+      <pixmap resource="Resource.qrc">:/img/img/pin.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -450,6 +450,7 @@
  </widget>
  <layoutdefault spacing="6" margin="0"/>
  <resources>
+  <include location="Resource.qrc"/>
   <include location="QtApplication1.qrc"/>
  </resources>
  <connections/>
