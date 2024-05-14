@@ -97,8 +97,8 @@
    <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>110</y>
+      <x>570</x>
+      <y>80</y>
       <width>941</width>
       <height>741</height>
      </rect>
@@ -110,8 +110,8 @@
    <widget class="QPushButton" name="addCityButton">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>170</y>
+      <x>110</x>
+      <y>110</y>
       <width>131</width>
       <height>41</height>
      </rect>
@@ -123,8 +123,8 @@
    <widget class="QPushButton" name="deletecitybutton">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>170</y>
+      <x>260</x>
+      <y>110</y>
       <width>131</width>
       <height>41</height>
      </rect>
@@ -133,11 +133,11 @@
      <string>Delete City</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="cityNameLineEdit">
+   <widget class="QLineEdit" name="city_name1">
     <property name="geometry">
      <rect>
-      <x>12</x>
-      <y>113</y>
+      <x>110</x>
+      <y>300</y>
       <width>271</width>
       <height>41</height>
      </rect>
@@ -155,8 +155,8 @@
    <widget class="QPushButton" name="addEdgeButton">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>220</y>
+      <x>110</x>
+      <y>170</y>
       <width>131</width>
       <height>41</height>
      </rect>
@@ -168,8 +168,8 @@
    <widget class="QPushButton" name="deleteedgebutton">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>220</y>
+      <x>260</x>
+      <y>170</y>
       <width>131</width>
       <height>41</height>
      </rect>
@@ -181,8 +181,8 @@
    <widget class="QPushButton" name="pushButton_5">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>270</y>
+      <x>110</x>
+      <y>590</y>
       <width>271</width>
       <height>41</height>
      </rect>
@@ -191,82 +191,11 @@
      <string>Delete All Graph</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="bfsbutton">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>370</y>
-      <width>271</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Display BFS</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="dfsbutton">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>420</y>
-      <width>271</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Display DFS</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="mspbutton">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>520</y>
-      <width>271</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Display Minimum Spanning Tree</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="startCitybutton">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>320</y>
-      <width>271</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="focusPolicy">
-     <enum>Qt::FocusPolicy::ClickFocus</enum>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignmentFlag::AlignCenter</set>
-    </property>
-    <property name="placeholderText">
-     <string>Enter Start City Name</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_9">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>470</y>
-      <width>271</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Display Dijkistra</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="undobutton">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>570</y>
+      <x>110</x>
+      <y>640</y>
       <width>131</width>
       <height>41</height>
      </rect>
@@ -278,8 +207,8 @@
    <widget class="QPushButton" name="redobutton">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>570</y>
+      <x>250</x>
+      <y>640</y>
       <width>131</width>
       <height>41</height>
      </rect>
@@ -288,11 +217,11 @@
      <string>Redo</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="returntograph">
+   <widget class="QPushButton" name="Submit">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>620</y>
+      <x>110</x>
+      <y>530</y>
       <width>271</width>
       <height>51</height>
      </rect>
@@ -301,28 +230,43 @@
      <string>Return to Graph</string>
     </property>
    </widget>
-   <widget class="QTabWidget" name="tabWidget">
+   <widget class="QLineEdit" name="city_name2">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>630</y>
-      <width>161</width>
-      <height>221</height>
+      <x>110</x>
+      <y>360</y>
+      <width>271</width>
+      <height>41</height>
      </rect>
     </property>
-    <property name="currentIndex">
-     <number>0</number>
+    <property name="focusPolicy">
+     <enum>Qt::FocusPolicy::WheelFocus</enum>
     </property>
-    <widget class="QWidget" name="tab">
-     <attribute name="title">
-      <string>Tab 1</string>
-     </attribute>
-    </widget>
-    <widget class="QWidget" name="tab_2">
-     <attribute name="title">
-      <string>Tab 2</string>
-     </attribute>
-    </widget>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
+    <property name="placeholderText">
+     <string>Enter City Name</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="road_cost">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>420</y>
+      <width>271</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::FocusPolicy::WheelFocus</enum>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignmentFlag::AlignCenter</set>
+    </property>
+    <property name="placeholderText">
+     <string>Enter City Name</string>
+    </property>
    </widget>
   </widget>
  </widget>
