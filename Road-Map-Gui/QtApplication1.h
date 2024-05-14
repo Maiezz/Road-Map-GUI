@@ -4,7 +4,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QStackedWidget>
 #include "ui_QtApplication1.h"
-#include "Mainwindow.h" // Include the header file for the new window
+#include "GraphView.h" // Include the header file for the new window
 
 class QtApplication1 : public QMainWindow
 {
@@ -22,7 +22,7 @@ private slots:
 
 private:
     Ui::QtApplication1Class* ui;
-    Mainwindow* mainwindow;  // Declare an instance of the new window
+    GraphViewClass* graphview;  // Declare an instance of the new window
     QStackedWidget* stackedWidget;
 
 protected:

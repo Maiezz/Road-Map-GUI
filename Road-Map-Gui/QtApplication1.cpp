@@ -9,7 +9,7 @@ QtApplication1::QtApplication1(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::QtApplication1Class)
 {
     ui->setupUi(this);
-    mainwindow = new Mainwindow(this); // Instantiate the new window
+    graphview = new GraphViewClass(this); // Instantiate the new window
     connect(ui->signupButton, &QPushButton::clicked, this, &QtApplication1::on_signupButton_clicked);
     connect(ui->loginButton, &QPushButton::clicked, this, &QtApplication1::on_loginButton_clicked);
     connect(ui->getstartedButton, &QPushButton::clicked, this, &QtApplication1::on_getstartedButton_clicked);
@@ -31,7 +31,7 @@ void QtApplication1::on_loginButton_clicked()
 
 void QtApplication1::on_loginButton_2_clicked()
 {
-    mainwindow->showFullScreen(); // Show the new window 
+    graphview->showFullScreen(); // Show the new window 
     this->hide(); // Hide the current window
 }
 

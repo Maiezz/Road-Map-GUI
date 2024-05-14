@@ -5,7 +5,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    GraphViewClass w;
-    w.show();
+    QtApplication1 w;
+    w.showFullScreen();
     return a.exec();
 }

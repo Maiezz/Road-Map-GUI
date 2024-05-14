@@ -73,4 +73,15 @@
       <Filter>Resource Files</Filter>
     </QtRcc>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="cities.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="city_positions.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="edges.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

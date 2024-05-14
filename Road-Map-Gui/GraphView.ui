@@ -99,12 +99,12 @@
      <rect>
       <x>300</x>
       <y>110</y>
-      <width>1221</width>
-      <height>461</height>
+      <width>941</width>
+      <height>741</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
+     <string notr="true">background-color: rgba(255, 255, 255,150);</string>
     </property>
    </widget>
    <widget class="QPushButton" name="addCityButton">
@@ -288,16 +288,6 @@
      <string>Redo</string>
     </property>
    </widget>
-   <widget class="QWidget" name="path" native="true">
-    <property name="geometry">
-     <rect>
-      <x>300</x>
-      <y>600</y>
-      <width>1221</width>
-      <height>181</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="returntograph">
     <property name="geometry">
      <rect>
@@ -310,6 +300,29 @@
     <property name="text">
      <string>Return to Graph</string>
     </property>
+   </widget>
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>630</y>
+      <width>161</width>
+      <height>221</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Tab 1</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Tab 2</string>
+     </attribute>
+    </widget>
    </widget>
   </widget>
  </widget>
