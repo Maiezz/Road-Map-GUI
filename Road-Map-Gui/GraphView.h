@@ -26,12 +26,13 @@ protected:
 private slots:
     void addCity();
     void addEdge();
-    void traverse();
-    void Displaymsp();
     void Redo();
     void Undo();
     void DeleteCity();
     void DeleteEdge();
+    void toalgowindow();
+    void tographwindow();
+    void showline();
 
 private:
     void saveCityPositionsToFile();
@@ -56,4 +57,5 @@ private:
 
     // Data structure to hold cities and edges
     unordered_map<string, list<edge>> cities;
+    QStackedWidget* stackedWidget;
 };

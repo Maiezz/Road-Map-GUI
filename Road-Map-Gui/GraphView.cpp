@@ -12,6 +12,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <vector>
+#include <QVBoxLayout>
 void ReadFormFiles(CountryGraph& Country)
 {
     Country.Read_Cities_FromFiles();
@@ -48,14 +49,14 @@ GraphViewClass::GraphViewClass(QWidget* parent) :
 
     connect(ui->addCityButton, &QPushButton::clicked, this, &GraphViewClass::addCity);
     connect(ui->addEdgeButton, &QPushButton::clicked, this, &GraphViewClass::addEdge);
-    connect(ui->mspbutton, &QPushButton::clicked, this, &GraphViewClass::Displaymsp);
-    connect(ui->dfsbutton, &QPushButton::clicked, this, &GraphViewClass::traverse);
-    connect(ui->bfsbutton, &QPushButton::clicked, this, &GraphViewClass::traverse);
-    connect(ui->returntograph, &QPushButton::clicked, this, &GraphViewClass::drawGraph);
+    connect(ui->toalgo, &QPushButton::clicked, this, &GraphViewClass::toalgowindow);
+    connect(ui->tograph, &QPushButton::clicked, this, &GraphViewClass::tographwindow);
     connect(ui->redobutton, &QPushButton::clicked, this, &GraphViewClass::Redo);
     connect(ui->undobutton, &QPushButton::clicked, this, &GraphViewClass::Undo);
+    connect(ui->prims, &QPushButton::clicked, this, &GraphViewClass::showline);
     connect(ui->deletecitybutton, &QPushButton::clicked, this, &GraphViewClass::DeleteCity);
     connect(ui->deleteedgebutton, &QPushButton::clicked, this, &GraphViewClass::DeleteEdge);
+    stackedWidget = findChild<QStackedWidget*>("stackedWidget");
     // Connect the QGraphicsView mouse press event to MainWindow
     view->installEventFilter(this);
 }
@@ -84,7 +85,7 @@ void GraphViewClass::Undo()
 
 void GraphViewClass::DeleteCity()
 {
-    QString cityName = ui->cityNameLineEdit->text();
+    QString cityName = ui->city_name1->text();
     if (cityName.isEmpty()) {
         QMessageBox::warning(this, "Error", "Please enter a city name.");
         return;
@@ -99,94 +100,75 @@ void GraphViewClass::DeleteEdge()
 
 }
 
-void GraphViewClass::traverse()
+void GraphViewClass::toalgowindow()
 {
-    QString cityName = ui->startCitybutton->text();
-    if (cityName.isEmpty()) {
-        QMessageBox::warning(this, "Error", "Please enter a city name.");
-        return; // Event handled
-    }
-    queue<string> path;
-    // Check which button triggered the slot
-    QObject* sender = QObject::sender();
-    if (sender == ui->bfsbutton) {
-        path = Country.BFS(cityName.toStdString());
-    }
-    else if (sender == ui->dfsbutton) {
-        path = Country.DFS(cityName.toStdString());
-    }
-
-
-    // Create custom color for DFS edges
-    QColor dfsEdgeColor(Qt::red);
-
-    // Set pen style for DFS edges to dashed
-    Qt::PenStyle penStyle = Qt::DashLine;
-
-    // Draw the DFS path on the scene
-    while (!path.empty()) {
-        string currentCity = path.front();
-        path.pop();
-        if (!path.empty()) {
-            string nextCity = path.front();
-
-            // Retrieve positions of current and next cities from cityPositions
-            QPointF currentPos = cityPositions.value(QString::fromStdString(currentCity));
-            QPointF nextPos = cityPositions.value(QString::fromStdString(nextCity));
-
-            // If both current and next positions are found, draw the DFS edge between them
-            if (!currentPos.isNull() && !nextPos.isNull()) {
-                QGraphicsLineItem* dfsEdgeItem = new QGraphicsLineItem(currentPos.x(), currentPos.y(), nextPos.x(), nextPos.y());
-                QPen dfsEdgePen(dfsEdgeColor);
-                dfsEdgePen.setStyle(penStyle); // Set pen style to dashed
-                dfsEdgePen.setWidth(2); // Adjust width as needed
-                dfsEdgeItem->setPen(dfsEdgePen);
-                scene->addItem(dfsEdgeItem);
-
-            }
-
-        }
-    }
+    stackedWidget->setCurrentIndex(1);
 }
 
-void GraphViewClass::Displaymsp()
+void GraphViewClass::tographwindow()
 {
-    // Get the minimum spanning tree (MSP) using Prim's algorithm
-    queue<pair<string, edge>> msp = Country.Prims();
-
-    // Create custom color for MSP edges
-    QColor mspEdgeColor(Qt::black);
-
-    // Set pen style for MSP edges to dashed
-    Qt::PenStyle penStyle = Qt::DashLine;
-
-    // Draw the edges of the MSP on the scene
-    while (!msp.empty()) {
-        // Get the next edge from the queue
-        auto [sourceCity, e] = msp.front();
-        msp.pop();
-
-        // Retrieve positions of source and destination cities from cityPositions
-        QPointF sourcePos = cityPositions.value(QString::fromStdString(sourceCity));
-        QPointF destPos = cityPositions.value(QString::fromStdString(e.destination_city));
-
-        // If both source and destination positions are found, draw the MSP edge between them
-        if (!sourcePos.isNull() && !destPos.isNull()) {
-            QGraphicsLineItem* mspEdgeItem = new QGraphicsLineItem(sourcePos.x(), sourcePos.y(), destPos.x(), destPos.y());
-            QPen mspEdgePen(mspEdgeColor);
-            mspEdgePen.setStyle(penStyle); // Set pen style to dashed
-            mspEdgePen.setWidth(2); // Adjust width as needed
-            mspEdgeItem->setPen(mspEdgePen);
-            scene->addItem(mspEdgeItem);
-        }
-    }
+    stackedWidget->setCurrentIndex(0);
 }
+
+void GraphViewClass::showline()
+{
+    queue<string> q;
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+    q.push("sss");
+
+    // Get the widget inside the scroll area
+    QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
+
+    // Create a vertical layout to hold labels
+    QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
+
+    // Loop through the queue and create labels
+    while (!q.empty()) {
+        QLabel* label = new QLabel(QString::fromStdString(q.front()), widgetInsideScrollArea);
+        layout->addWidget(label);
+        q.pop();
+    }
+
+    // Set the layout of the widget inside the scroll area
+    widgetInsideScrollArea->setLayout(layout);
+
+}
+
+
 void GraphViewClass::addCity()
 {
     addingCity = true;
     ui->addCityButton->setText("Click on the map to add the city");
     ui->addCityButton->setEnabled(false);
-    ui->cityNameLineEdit->setEnabled(false);
+    ui->city_name1->setEnabled(false);
 
 }
 
@@ -200,7 +182,7 @@ bool GraphViewClass::eventFilter(QObject* watched, QEvent* event)
         if (mouseEvent->button() == Qt::LeftButton) {
             if (addingCity) {
                 // Add city at the clicked position
-                QString cityName = ui->cityNameLineEdit->text();
+                QString cityName = ui->city_name1->text();
                 if (cityName.isEmpty()) {
                     QMessageBox::warning(this, "Error", "Please enter a city name.");
                     return true; // Event handled
@@ -212,10 +194,10 @@ bool GraphViewClass::eventFilter(QObject* watched, QEvent* event)
                 drawGraph();
 
                 addingCity = false;
-                ui->cityNameLineEdit->clear();
+                ui->city_name1->clear();
                 ui->addCityButton->setText("Add City");
                 ui->addCityButton->setEnabled(true);
-                ui->cityNameLineEdit->setEnabled(true);
+                ui->city_name1->setEnabled(true);
                 return true; // Event handled
             }
         }
