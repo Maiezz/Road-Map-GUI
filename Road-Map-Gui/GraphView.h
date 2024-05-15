@@ -32,9 +32,17 @@ private slots:
     void DeleteEdge();
     void toalgowindow();
     void tographwindow();
-    void showline();
-
+    void sub();
+    ////////////////
+    void showprims();
+    void showbfs();
+    void showdfs();
+    void showkruksal();
+    void showfloyd();
+    void showdijkistra();
+    /////////////////////
 private:
+    int flag;
     void saveCityPositionsToFile();
     void drawGraph();
     void readCityPositionsFromFile();

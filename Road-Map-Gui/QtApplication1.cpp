@@ -31,7 +31,13 @@ void QtApplication1::on_loginButton_clicked()
 
 void QtApplication1::on_loginButton_2_clicked()
 {
-    graphview->showFullScreen(); // Show the new window 
+    QString username = ui->loginusername->text();
+    QString password = ui->loginpassword->text();
+
+
+
+    // if user logged in
+    graphview->showMaximized(); // Show the new window 
     this->hide(); // Hide the current window
 }
 
@@ -43,6 +49,11 @@ void QtApplication1::on_getstartedButton_clicked()
 
 void QtApplication1::on_signupButton_clicked()
 {
+    QString username = ui->signinusername->text();
+    QString password = ui->signinpassword->text();
+
+
+    // if user signed in
     stackedWidget->setCurrentIndex(1);
 }
 

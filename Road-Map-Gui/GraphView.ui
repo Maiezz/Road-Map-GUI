@@ -44,7 +44,7 @@
       <rect>
        <x>70</x>
        <y>20</y>
-       <width>91</width>
+       <width>151</width>
        <height>41</height>
       </rect>
      </property>
@@ -96,8 +96,8 @@
        <rect>
         <x>570</x>
         <y>70</y>
-        <width>771</width>
-        <height>611</height>
+        <width>901</width>
+        <height>651</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -107,11 +107,16 @@
      <widget class="QPushButton" name="addCityButton">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>110</y>
-        <width>131</width>
+        <x>80</x>
+        <y>120</y>
+        <width>141</width>
         <height>41</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Add City</string>
@@ -121,10 +126,15 @@
       <property name="geometry">
        <rect>
         <x>260</x>
-        <y>110</y>
-        <width>131</width>
+        <y>120</y>
+        <width>141</width>
         <height>41</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Delete City</string>
@@ -133,11 +143,18 @@
      <widget class="QLineEdit" name="city_name1">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>300</y>
+        <x>100</x>
+        <y>290</y>
         <width>271</width>
         <height>41</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <italic>true</italic>
+        <bold>false</bold>
+       </font>
       </property>
       <property name="focusPolicy">
        <enum>Qt::FocusPolicy::WheelFocus</enum>
@@ -152,11 +169,16 @@
      <widget class="QPushButton" name="addEdgeButton">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>170</y>
-        <width>131</width>
+        <x>80</x>
+        <y>190</y>
+        <width>141</width>
         <height>41</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Add Edge</string>
@@ -166,10 +188,15 @@
       <property name="geometry">
        <rect>
         <x>260</x>
-        <y>170</y>
-        <width>131</width>
+        <y>190</y>
+        <width>141</width>
         <height>41</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Delete Edge</string>
@@ -178,11 +205,17 @@
      <widget class="QPushButton" name="pushButton_5">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>590</y>
+        <x>100</x>
+        <y>560</y>
         <width>271</width>
-        <height>41</height>
+        <height>51</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
       </property>
       <property name="text">
        <string>Delete All Graph</string>
@@ -191,11 +224,17 @@
      <widget class="QPushButton" name="undobutton">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>640</y>
+        <x>100</x>
+        <y>620</y>
         <width>131</width>
         <height>41</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
       </property>
       <property name="text">
        <string>Undo</string>
@@ -204,11 +243,17 @@
      <widget class="QPushButton" name="redobutton">
       <property name="geometry">
        <rect>
-        <x>250</x>
-        <y>640</y>
+        <x>240</x>
+        <y>620</y>
         <width>131</width>
         <height>41</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
       </property>
       <property name="text">
        <string>Redo</string>
@@ -217,11 +262,17 @@
      <widget class="QPushButton" name="Submit">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>530</y>
+        <x>100</x>
+        <y>500</y>
         <width>271</width>
         <height>51</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
       </property>
       <property name="text">
        <string>Submit</string>
@@ -230,11 +281,17 @@
      <widget class="QLineEdit" name="city_name2">
       <property name="geometry">
        <rect>
-        <x>110</x>
+        <x>100</x>
         <y>360</y>
         <width>271</width>
         <height>41</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <italic>true</italic>
+       </font>
       </property>
       <property name="focusPolicy">
        <enum>Qt::FocusPolicy::WheelFocus</enum>
@@ -249,11 +306,17 @@
      <widget class="QLineEdit" name="road_cost">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>420</y>
+        <x>100</x>
+        <y>430</y>
         <width>271</width>
         <height>41</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <italic>true</italic>
+       </font>
       </property>
       <property name="focusPolicy">
        <enum>Qt::FocusPolicy::WheelFocus</enum>
@@ -268,14 +331,63 @@
      <widget class="QPushButton" name="toalgo">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>690</y>
+        <x>100</x>
+        <y>670</y>
         <width>271</width>
         <height>51</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
        <string>to algo</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>10</y>
+        <width>431</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Bahnschrift Condensed</family>
+        <pointsize>36</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+								color: rgb(57, 196, 173);
+							</string>
+      </property>
+      <property name="text">
+       <string>Create your graph</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>10</y>
+        <width>51</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>:/img/distance.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>
@@ -381,6 +493,19 @@
        <string>to graph</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="floyd">
+      <property name="geometry">
+       <rect>
+        <x>1060</x>
+        <y>150</y>
+        <width>171</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>floyd</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="Line" name="line">
@@ -404,7 +529,6 @@
  <layoutdefault spacing="6" margin="0"/>
  <resources>
   <include location="Resource.qrc"/>
-  <include location="../../../../.designer/backup/Resource.qrc"/>
  </resources>
  <connections/>
 </ui>

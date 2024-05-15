@@ -37,7 +37,7 @@ public:
 	queue<string> DFS(string start_city);
 	queue<string> BFS(string start);
 	queue<pair<string, edge>> Prims();
-	void dijkstra_algorithm(string start_city);
+	queue<string> dijkstra_algorithm(string start_city);
 	void Undo();
 	void Redo();
 	void ApplyUChanges(pair<int, pair<string, list<edge>>>&);
@@ -47,4 +47,8 @@ public:
 	bool applychanges;
 	unordered_map<string, list<edge>>& getCities();
 	vector<pair<string, edge>> getEdges();
+	string findParent(unordered_map<string, string>& parent, const string& city);
+	void unionCities(unordered_map<string, string>& parent, unordered_map<string, int>& rank, const string& city1, const string& city2);
+	queue<pair<string, edge>> kruskalMST();
+	int FloydWarshall2(string start_city, string dist_city);
 };

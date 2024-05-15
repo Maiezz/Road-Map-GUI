@@ -7,8 +7,10 @@
 #include<unordered_set>
 #include<queue>
 #include<stack>
+#include <set>
 using namespace std;
 const float INF = INFINITY;
+
 
 unordered_map<string, list<edge>>& CountryGraph::getCities() {
 
@@ -247,34 +249,38 @@ queue<string> CountryGraph::BFS(string start)
 {
     unordered_set<string> visited;
     queue<string>temp;
-    queue<string>path;
-
+    queue<string>gui_q;
     visited.insert(start);
     temp.push(start);
-    path.push(start);
-    int levelnum = 0;
-
+    gui_q.push(start);
+    int levelsize = 0;
     while (!temp.empty())
     {
-        string current = temp.front();
-        temp.pop();
-
-        for (const auto& nextEdge : cities.at(current))
+        int levelSize = temp.size();
+        string currentlevel = "";
+        for (int i = 0; i < levelSize; i++)
         {
-            string next = nextEdge.destination_city;
-            if (temp.empty())
-                levelnum++;
-            if (visited.count(next) == 0)
+
+            string current = temp.front();
+            temp.pop();
+            for (const auto& nextEdge : cities.at(current))
             {
-                visited.insert(next);
-                temp.push(next);
-                cout << next << " ";
-                path.push(next);
+                string next = nextEdge.destination_city;
+                if (visited.count(next) == 0)
+                {
+                    visited.insert(next);
+                    temp.push(next);
+                    currentlevel += next + "-";
+                }
             }
         }
+        gui_q.push(currentlevel);
     }
-    return path;
+
+
+    return gui_q;
 }
+
 
 queue<string> CountryGraph::DFS(string start_city) {
     unordered_map<string, bool> visited;
@@ -349,8 +355,9 @@ queue<pair<string, edge>> CountryGraph::Prims() {
     }
     return path;
 }
-void CountryGraph::dijkstra_algorithm(string source)//O((V+E)logV)
+queue<string> CountryGraph::dijkstra_algorithm(string source)//O((V+E)logV)
 {
+
     unordered_map<string, int> costs; //for sorting each city with it’s updated distance
     unordered_map<string, bool> visited; // for marking the cities the dijkstra’s_algorithm already visit 
     unordered_map<string, string> previous_node;
@@ -359,11 +366,12 @@ void CountryGraph::dijkstra_algorithm(string source)//O((V+E)logV)
 
     for (auto node : cities) {
         //set all the distances with infinity value for using it in comparing
-        costs[node.first] = INF;
+        costs[node.first] = numeric_limits<int>::max();
         visited[node.first] = 0;
     }
 
     costs[source] = 0;
+    previous_node[source] = " The start city";
     next_node.push({ costs[source], source });
 
     while (!next_node.empty()) {
@@ -384,11 +392,31 @@ void CountryGraph::dijkstra_algorithm(string source)//O((V+E)logV)
             }
         }
     }
-
     cout << "Shortest distances from " << source << ":\n";
+    queue<string>gui;
     for (auto distance : costs) {
-        cout << distance.first << " : " << distance.second << " from " << previous_node[distance.first] << endl;
+        string lineforgui = "";
+        lineforgui += distance.first + " : ";
+        if (distance.second == numeric_limits<int>::max())
+        {
+            lineforgui += " it is disconnected city from start city ";
+        }
+        else {
+            lineforgui += to_string(distance.second);
+            if (previous_node[distance.first] == " The start city")
+            {
+                lineforgui += previous_node[distance.first];
+            }
+            else
+            {
+                lineforgui += " from " + previous_node[distance.first];
+            }
+        }
+        gui.push(lineforgui);
     }
+
+    return gui;
+
 }
 
 void CountryGraph::ReAddCity(pair<string, list<edge>>& city) {
@@ -464,3 +492,147 @@ void CountryGraph::ApplyRChanges(pair<int, pair<string, list<edge>>>& change) {
     }
     applychanges = true;
 }
+
+string CountryGraph::findParent(unordered_map<string, string>& parent, const string& city) {
+    if (parent[city] != city) {
+        parent[city] = findParent(parent, parent[city]);
+    }
+    return parent[city];
+}
+
+void CountryGraph::unionCities(unordered_map<string, string>& parent, unordered_map<string, int>& rank, const string& city1, const string& city2) {
+    string parent1 = findParent(parent, city1);
+    string parent2 = findParent(parent, city2);
+
+    if (parent1 != parent2) {
+        if (rank[parent1] < rank[parent2]) {
+            parent[parent1] = parent2;
+        }
+        else if (rank[parent1] > rank[parent2]) {
+            parent[parent2] = parent1;
+        }
+        else {
+            parent[parent2] = parent1;
+            rank[parent1]++;
+        }
+    }
+}
+
+queue<pair<string, edge>> CountryGraph::kruskalMST() {
+    // Define a structure to represent an edge
+    struct Edge {
+        string src;
+        string dest;
+        int cost;
+
+        Edge(const string& source, const string& destination, int cst) : src(source), dest(destination), cost(cst) {}
+    };
+
+    // Comparator function for sorting edges by cost
+    auto compareEdges = [](const Edge& e1, const Edge& e2) {
+        return e1.cost > e2.cost; // Note: Changed to '>' for minimum spanning tree
+    };
+
+    // Priority queue to store edges sorted by cost
+    priority_queue<Edge, vector<Edge>, decltype(compareEdges)> pq(compareEdges);
+
+    // Add all edges to the priority queue
+    for (const auto& city : cities) {
+        for (const auto& edge : city.second) {
+            pq.emplace(city.first, edge.destination_city, edge.cost);
+        }
+    }
+
+    // Set to store parent of each city
+    unordered_map<string, string> parent;
+
+    // Initialize rank for each city
+    unordered_map<string, int> rank;
+    for (const auto& city : cities) {
+        parent[city.first] = city.first; // Each city is its own parent initially
+        rank[city.first] = 0; // Initialize rank to 0
+    }
+
+    // Minimum spanning tree edges
+    queue<pair<string, edge>> path; // Queue to store edges for GUI visualization
+
+    int minCost = 0; // Variable to store the total cost of the minimum spanning tree
+
+    // Iterate until all edges are processed or MST is formed
+    while (!pq.empty()) {
+        Edge currentEdge = pq.top();
+        pq.pop();
+
+        string parent1 = findParent(parent, currentEdge.src);
+        string parent2 = findParent(parent, currentEdge.dest);
+
+        // Check if adding this edge forms a cycle
+        if (parent1 != parent2) {
+            // Add edge to MST
+            edge e = { currentEdge.dest, currentEdge.cost };
+            path.push({ currentEdge.src, e });
+
+            // Add cost to the minimum spanning tree
+            minCost += currentEdge.cost;
+
+            // Merge the sets of source and destination cities
+            unionCities(parent, rank, parent1, parent2);
+        }
+    }
+
+    //// Print the minimum spanning tree
+    //cout << "Minimum Spanning Tree (Kruskal's Algorithm):" << endl;
+    //while (!path.empty()) {
+    //    auto p = path.front();
+    //    path.pop();
+    //    cout << p.first << " -> " << p.second.destination_city << " " << p.second.cost << endl;
+    //}
+    //// Print the minimum cost of the minimum spanning tree
+    //cout << "Minimum Cost of the Minimum Spanning Tree: " << minCost << endl;
+
+    return path;
+}
+
+int CountryGraph::FloydWarshall2(string start_city, string dist_city)
+{
+    // Create a distance map to store all shortest paths
+    unordered_map<string, unordered_map<string, int>> distance;
+
+    // Initialize the distance map with the graph data
+    for (auto const& city : cities) {
+        distance[city.first] = unordered_map<string, int>();
+        for (auto const& edge : city.second) {
+            distance[city.first][edge.destination_city] = edge.cost;
+        }
+        // Set distance to self and unvisited cities to infinity
+        distance[city.first][city.first] = 0;
+        for (auto const& otherCity : cities) {
+            if (distance[city.first].count(otherCity.first) == 0) {
+                distance[city.first][otherCity.first] = INT_MAX;
+            }
+        }
+    }
+
+    // Relax all edges by considering intermediate vertices
+    for (auto const& intermediate_city : cities) {
+        for (auto const& source_city : cities) {
+            for (auto const& destination_city : cities) {
+                // If there's a shorter path through the intermediate vertex, update the distance
+                if (distance[source_city.first].count(intermediate_city.first) != 0 &&
+                    distance[intermediate_city.first].count(destination_city.first) != 0 &&
+                    distance[source_city.first][intermediate_city.first] != INT_MAX &&
+                    distance[intermediate_city.first][destination_city.first] != INT_MAX &&
+                    distance[source_city.first][intermediate_city.first] + distance[intermediate_city.first][destination_city.first] < distance[source_city.first][destination_city.first]) {
+                    distance[source_city.first][destination_city.first] = distance[source_city.first][intermediate_city.first] + distance[intermediate_city.first][destination_city.first];
+                }
+            }
+        }
+    }
+
+    int dist = distance[start_city][dist_city];
+    return dist;
+}
+
+
+
+

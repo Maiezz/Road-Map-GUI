@@ -13,6 +13,15 @@
 #include <QTextStream>
 #include <vector>
 #include <QVBoxLayout>
+#include <String>
+string  stringformat(string str) {
+    string result = "";
+    result += toupper(str[0]);
+    for (int i = 1; i < str.size(); i++) {
+        result += tolower(str[i]);
+    }
+    return result;
+}
 void ReadFormFiles(CountryGraph& Country)
 {
     Country.Read_Cities_FromFiles();
@@ -36,7 +45,7 @@ GraphViewClass::GraphViewClass(QWidget* parent) :
     cities = Country.getCities();
 
     ui->setupUi(this);
-
+    flag = 0;
     // Set up the QGraphicsView from the UI
     view = ui->graphicsView;
     scene = new QGraphicsScene(this);
@@ -53,11 +62,19 @@ GraphViewClass::GraphViewClass(QWidget* parent) :
     connect(ui->tograph, &QPushButton::clicked, this, &GraphViewClass::tographwindow);
     connect(ui->redobutton, &QPushButton::clicked, this, &GraphViewClass::Redo);
     connect(ui->undobutton, &QPushButton::clicked, this, &GraphViewClass::Undo);
-    connect(ui->prims, &QPushButton::clicked, this, &GraphViewClass::showline);
     connect(ui->deletecitybutton, &QPushButton::clicked, this, &GraphViewClass::DeleteCity);
     connect(ui->deleteedgebutton, &QPushButton::clicked, this, &GraphViewClass::DeleteEdge);
+    connect(ui->Submit, &QPushButton::clicked, this, &GraphViewClass::sub);
     stackedWidget = findChild<QStackedWidget*>("stackedWidget");
     // Connect the QGraphicsView mouse press event to MainWindow
+    connect(ui->prims, &QPushButton::clicked, this, &GraphViewClass::showprims);
+    connect(ui->dijkistra, &QPushButton::clicked, this, &GraphViewClass::showdijkistra);
+    connect(ui->kruksal, &QPushButton::clicked, this, &GraphViewClass::showkruksal);
+    connect(ui->dfs, &QPushButton::clicked, this, &GraphViewClass::showdfs);
+    connect(ui->bfs, &QPushButton::clicked, this, &GraphViewClass::showbfs);
+    connect(ui->floyd, &QPushButton::clicked, this, &GraphViewClass::showfloyd);
+
+    stackedWidget->setCurrentIndex(0);
     view->installEventFilter(this);
 }
 
@@ -68,7 +85,127 @@ GraphViewClass::~GraphViewClass()
     delete ui;
 }
 
+void GraphViewClass::addCity()
+{
 
+    flag = 0;
+    ui->city_name2->setVisible(false);
+    ui->city_name1->setVisible(true);
+    ui->road_cost->setVisible(false);
+    
+
+}
+void GraphViewClass::addEdge()
+{
+    flag = 1;
+    ui->city_name2->setVisible(true);
+    ui->city_name1->setVisible(true);
+    ui->road_cost->setVisible(true);
+
+}
+void GraphViewClass::DeleteCity()
+{
+    flag = 2;
+    ui->city_name1->setVisible(true);
+    ui->city_name2->setVisible(false);
+    ui->road_cost->setVisible(false);
+}
+
+void GraphViewClass::DeleteEdge()
+{
+    flag = 3;
+    ui->city_name2->setVisible(true);
+    ui->city_name1->setVisible(true);
+    ui->road_cost->setVisible(false);
+}
+void GraphViewClass::sub()
+{
+    switch (flag) {
+    case 0://add city
+    {
+        addingCity = true;
+        ui->addCityButton->setText("Click on the map to add the city");
+        ui->city_name1->setEnabled(false);
+        break;
+    }
+
+    case 1://add edge 
+    {
+        QString source = ui->city_name1->text();
+
+        if (source.isEmpty()) {
+            QMessageBox::warning(this, "Error", "Please enter a city name.");
+            return; // Event handled
+        }
+
+        QString dest = ui->city_name2->text();
+
+        if (dest.isEmpty()) {
+            QMessageBox::warning(this, "Error", "Please enter a city name.");
+            return; // Event handled
+        }
+
+        QString costtext = ui->road_cost->text();
+        int cost = costtext.toInt();
+        if (dest.isEmpty()) {
+            QMessageBox::warning(this, "Error", "Please enter a city cost.");
+            return; // Event handled
+        }
+        while (cost < 0)
+        {
+            QMessageBox::warning(this, "Error", "cost must be nonnegative number");
+            QString costtext = ui->road_cost->text();
+            int cost = costtext.toInt();
+        }
+
+        Country.AddEdge(stringformat(source.toStdString()), stringformat(dest.toStdString()), cost);
+        drawGraph();
+        ui->city_name1->clear();
+        ui->city_name2->clear();
+        ui->road_cost->clear();
+        break;
+    }
+
+    case 2:// delete city
+    {
+        QString cityName = ui->city_name1->text();
+        if (cityName.isEmpty()) {
+            QMessageBox::warning(this, "Error", "Please enter a city name.");
+            return;
+        }
+        Country.DeleteCity(stringformat(cityName.toStdString()));
+        drawGraph();
+        ui->city_name1->clear();
+        break;
+    }
+    case 3:// delete edge
+    {
+        QString source = ui->city_name1->text();
+
+        if (source.isEmpty()) {
+            QMessageBox::warning(this, "Error", "Please enter a city name.");
+            return; // Event handled
+        }
+
+        QString dest = ui->city_name2->text();
+
+        if (dest.isEmpty()) {
+            QMessageBox::warning(this, "Error", "Please enter a city name.");
+            return; // Event handled
+        }
+
+        Country.DeleteEdge(stringformat(source.toStdString()), stringformat(dest.toStdString()));
+        drawGraph();
+        ui->city_name1->clear();
+        ui->city_name2->clear();
+        break;
+    }
+    }
+}
+
+
+
+///////////////////////////////////////////////////
 void GraphViewClass::Redo()
 {
     Country.Redo();
@@ -83,23 +220,6 @@ void GraphViewClass::Undo()
 
 }
 
-void GraphViewClass::DeleteCity()
-{
-    QString cityName = ui->city_name1->text();
-    if (cityName.isEmpty()) {
-        QMessageBox::warning(this, "Error", "Please enter a city name.");
-        return;
-    }
-    Country.DeleteCity(cityName.toStdString());
-    drawGraph();
-
-}
-
-void GraphViewClass::DeleteEdge()
-{
-
-}
-
 void GraphViewClass::toalgowindow()
 {
     stackedWidget->setCurrentIndex(1);
@@ -110,70 +230,6 @@ void GraphViewClass::tographwindow()
     stackedWidget->setCurrentIndex(0);
 }
 
-void GraphViewClass::showline()
-{
-    queue<string> q;
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-    q.push("sss");
-
-    // Get the widget inside the scroll area
-    QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
-
-    // Create a vertical layout to hold labels
-    QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
-
-    // Loop through the queue and create labels
-    while (!q.empty()) {
-        QLabel* label = new QLabel(QString::fromStdString(q.front()), widgetInsideScrollArea);
-        layout->addWidget(label);
-        q.pop();
-    }
-
-    // Set the layout of the widget inside the scroll area
-    widgetInsideScrollArea->setLayout(layout);
-
-}
-
-
-void GraphViewClass::addCity()
-{
-    addingCity = true;
-    ui->addCityButton->setText("Click on the map to add the city");
-    ui->addCityButton->setEnabled(false);
-    ui->city_name1->setEnabled(false);
-
-}
-
-
-
 bool GraphViewClass::eventFilter(QObject* watched, QEvent* event)
 {
 
@@ -183,13 +239,20 @@ bool GraphViewClass::eventFilter(QObject* watched, QEvent* event)
             if (addingCity) {
                 // Add city at the clicked position
                 QString cityName = ui->city_name1->text();
+               
                 if (cityName.isEmpty()) {
+
                     QMessageBox::warning(this, "Error", "Please enter a city name.");
+                    addingCity = false;
+                    ui->city_name1->clear();
+                    ui->addCityButton->setText("Add City");
+                    ui->addCityButton->setEnabled(true);
+                    ui->city_name1->setEnabled(true);
                     return true; // Event handled
                 }
                 QPointF pos = view->mapToScene(mouseEvent->pos());
-                cityPositions.insert(cityName, pos);
-                Country.AddCity(cityName.toStdString());
+                cityPositions.insert(QString::fromStdString(stringformat(cityName.toStdString())), pos);
+                Country.AddCity(stringformat(cityName.toStdString()));
 
                 drawGraph();
 
@@ -204,6 +267,7 @@ bool GraphViewClass::eventFilter(QObject* watched, QEvent* event)
     }
     return QMainWindow::eventFilter(watched, event);
 }
+
 
 void GraphViewClass::saveCityPositionsToFile()
 {
@@ -258,22 +322,6 @@ void GraphViewClass::readCityPositionsFromFile()
     file.close();
 }
 
-
-void GraphViewClass::addEdge()
-{
-    bool ok;
-    QString source = QInputDialog::getText(this, "Enter Source Node", "Source Node:", QLineEdit::Normal, "", &ok);
-    if (!ok || source.isEmpty()) return;
-
-    QString dest = QInputDialog::getText(this, "Enter Source Node", "Destination Node:", QLineEdit::Normal, "", &ok);
-    if (!ok || dest.isEmpty()) return;
-
-    int cost = QInputDialog::getInt(this, "Enter Edge Cost", "Edge Cost:", 0, 0, INT_MAX, 1, &ok);
-    if (!ok) return;
-
-    Country.AddEdge(source.toStdString(), dest.toStdString(), cost);
-    drawGraph();
-}
 void GraphViewClass::drawGraph()
 {
     scene->clear();
@@ -318,3 +366,120 @@ void GraphViewClass::drawGraph()
 
 }
 
+void GraphViewClass::showprims()
+{
+    queue <pair<string, edge>> msp = Country.Prims();
+    // Get the widget inside the scroll area
+    QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
+
+    // Create a vertical layout to hold labels
+    QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
+
+    // Loop through the queue and create labels
+    while (!msp.empty()) {
+        QString source = QString::fromStdString(msp.front().first);
+        QString dist = QString::fromStdString(msp.front().second.destination_city);
+        QString cost = QString::number(msp.front().second.cost);
+        QLabel* label = new QLabel("From : " + source + "To : " + dist + "By : " + cost, widgetInsideScrollArea);
+        layout->addWidget(label);
+        msp.pop();
+    }
+
+    // Set the layout of the widget inside the scroll area
+    widgetInsideScrollArea->setLayout(layout);
+
+}
+
+void GraphViewClass::showbfs()
+{
+    string start = "Cairo";
+    queue<string> bfs = Country.BFS(start);
+    // Get the widget inside the scroll area
+    QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
+
+    // Create a vertical layout to hold labels
+    QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
+
+    // Loop through the queue and create labels
+    while (!bfs.empty()) {
+        QString source = QString::fromStdString(bfs.front());
+        QLabel* label = new QLabel(source, widgetInsideScrollArea);
+        layout->addWidget(label);
+        bfs.pop();
+    }
+
+    // Set the layout of the widget inside the scroll area
+    widgetInsideScrollArea->setLayout(layout);
+}
+
+void GraphViewClass::showdfs()
+{
+    string start = "Cairo";
+    queue<string> dfs = Country.DFS(start);
+    // Get the widget inside the scroll area
+    QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
+
+    // Create a vertical layout to hold labels
+    QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
+
+    // Loop through the queue and create labels
+    while (!dfs.empty()) {
+        QString source = QString::fromStdString(dfs.front());
+        QLabel* label = new QLabel(source, widgetInsideScrollArea);
+        layout->addWidget(label);
+        dfs.pop();
+    }
+
+    // Set the layout of the widget inside the scroll area
+    widgetInsideScrollArea->setLayout(layout);
+}
+
+void GraphViewClass::showkruksal()
+{
+    queue <pair<string, edge>> msp = Country.kruskalMST();
+    // Get the widget inside the scroll area
+    QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
+
+    // Create a vertical layout to hold labels
+    QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
+
+    // Loop through the queue and create labels
+    while (!msp.empty()) {
+        QString source = QString::fromStdString(msp.front().first);
+        QString dist = QString::fromStdString(msp.front().second.destination_city);
+        QString cost = QString::number(msp.front().second.cost);
+        QLabel* label = new QLabel("From : " + source + "To : " + dist + "By : " + cost, widgetInsideScrollArea);
+        layout->addWidget(label);
+        msp.pop();
+    }
+
+    // Set the layout of the widget inside the scroll area
+    widgetInsideScrollArea->setLayout(layout);
+}
+
+void GraphViewClass::showfloyd()
+{
+
+}
+
+void GraphViewClass::showdijkistra()
+{
+    string start = "Cairo";
+    queue<string> dij = Country.dijkstra_algorithm(start);
+    // Get the widget inside the scroll area
+    QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
+
+    // Create a vertical layout to hold labels
+    QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
+
+    // Loop through the queue and create labels
+    while (!dij.empty()) {
+        QString source = QString::fromStdString(dij.front());
+        QLabel* label = new QLabel(source, widgetInsideScrollArea);
+        layout->addWidget(label);
+        dij.pop();
+    }
+
+    // Set the layout of the widget inside the scroll area
+    widgetInsideScrollArea->setLayout(layout);
+}
