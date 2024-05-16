@@ -17,7 +17,7 @@
    <string notr="true">
 				background-color: rgb(243, 243, 243);
 				background-color: rgb(255, 255, 255);
-				background-color:rgb(34, 34, 34)
+				background-color:rgb(34, 34, 34);
 
 
 			</string>
@@ -88,7 +88,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QGraphicsView" name="graphicsView">
@@ -395,8 +395,8 @@
      <widget class="QScrollArea" name="scrollArea">
       <property name="geometry">
        <rect>
-        <x>320</x>
-        <y>330</y>
+        <x>300</x>
+        <y>240</y>
         <width>921</width>
         <height>351</height>
        </rect>
@@ -418,92 +418,180 @@
      <widget class="QPushButton" name="bfs">
       <property name="geometry">
        <rect>
-        <x>510</x>
-        <y>70</y>
+        <x>70</x>
+        <y>135</y>
         <width>171</width>
         <height>51</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
-       <string>bfs</string>
+       <string>BFS</string>
       </property>
      </widget>
      <widget class="QPushButton" name="dfs">
       <property name="geometry">
        <rect>
-        <x>770</x>
-        <y>70</y>
+        <x>530</x>
+        <y>130</y>
         <width>171</width>
         <height>51</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
-       <string>dfs</string>
+       <string>DFS</string>
       </property>
      </widget>
      <widget class="QPushButton" name="prims">
       <property name="geometry">
        <rect>
-        <x>1060</x>
-        <y>70</y>
+        <x>980</x>
+        <y>130</y>
         <width>171</width>
         <height>51</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
-       <string>prims</string>
+       <string>Prims</string>
       </property>
      </widget>
      <widget class="QPushButton" name="dijkistra">
       <property name="geometry">
        <rect>
-        <x>510</x>
-        <y>150</y>
+        <x>300</x>
+        <y>135</y>
         <width>171</width>
         <height>51</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
-       <string>dijkistra</string>
+       <string>Dijkistra</string>
       </property>
      </widget>
      <widget class="QPushButton" name="kruksal">
       <property name="geometry">
        <rect>
-        <x>770</x>
-        <y>150</y>
+        <x>750</x>
+        <y>130</y>
         <width>171</width>
         <height>51</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
-       <string>kruksal</string>
+       <string>Kruksal</string>
       </property>
      </widget>
      <widget class="QPushButton" name="tograph">
       <property name="geometry">
        <rect>
-        <x>80</x>
-        <y>150</y>
-        <width>171</width>
+        <x>650</x>
+        <y>620</y>
+        <width>231</width>
         <height>51</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+								color: rgb(57, 196, 173);
+							</string>
+      </property>
       <property name="text">
-       <string>to graph</string>
+       <string>Back to graph</string>
       </property>
      </widget>
      <widget class="QPushButton" name="floyd">
       <property name="geometry">
        <rect>
-        <x>1060</x>
-        <y>150</y>
+        <x>1220</x>
+        <y>130</y>
         <width>171</width>
         <height>51</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
       <property name="text">
-       <string>floyd</string>
+       <string>Floyd</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_11">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>20</y>
+        <width>1021</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">
+								font-weight: 400;
+								font: 40pt &quot;Bahnschrift Condensed&quot;;
+								color: rgb(57, 196, 173);
+
+
+							</string>
+      </property>
+      <property name="text">
+       <string>Apply Algorithms On Your Graph</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>30</y>
+        <width>101</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>:/img/algorithm (2).png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>

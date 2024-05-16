@@ -3,4 +3,4 @@ Cairo,Alex,4
 Alex,Cairo,4
 Alex,Giza,3
 Giza,Cairo,2
-Cairo,Alex,3
+Giza,Alex,3

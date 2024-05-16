@@ -1,10 +1,16 @@
 #pragma once
-#include<unordered_map>
-#include<list>
-#include<string>
-#include <stack>
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include <vector>
+#include <unordered_map>
+#include <unordered_set>
 #include <queue>
-#include<vector>
+#include <stack>
+#include <set>
+#include <functional>
+#include <algorithm>
+#include <limits>
 using namespace std;
 
 struct edge
@@ -14,10 +20,12 @@ struct edge
 };
 class CountryGraph
 {
-
+	bool connected;
+	unordered_map<string, int> rank;
 	unordered_map<string, list<edge>>cities;
 	stack<pair<int, pair<string, list<edge>>>> undoStack;
 	stack<pair<int, pair<string, list<edge>>>> redoStack;
+
 
 public:
 	void AddCity(string city);
@@ -30,10 +38,6 @@ public:
 	void DeleteCity(string city);
 	void DeleteEdge(string city_1, string city_2);
 	void Delete_AllGraph();
-	int Write_Cities_InFiles();
-	int Write_Edges_InFiles();
-	int Read_Cities_FromFiles();
-	int Read_Edges_FromFiles();
 	queue<string> DFS(string start_city);
 	queue<string> BFS(string start);
 	queue<pair<string, edge>> Prims();
@@ -50,5 +54,37 @@ public:
 	string findParent(unordered_map<string, string>& parent, const string& city);
 	void unionCities(unordered_map<string, string>& parent, unordered_map<string, int>& rank, const string& city1, const string& city2);
 	queue<pair<string, edge>> kruskalMST();
-	int FloydWarshall2(string start_city, string dist_city);
+	pair<int, vector<string>> FloydWarshall2(string start_city, string dist_city);
+	bool is_connected();
+	bool is_graphempty();
+	int Write_Cities_InFiles(string);
+	int Write_Edges_InFiles(string);
+	int Read_Cities_FromFiles(string);
+	int Read_Edges_FromFiles(string);
+};
+class UserGraph
+{
+public:
+	string username;
+	string	password;
+	CountryGraph graph;
+	UserGraph();
+	UserGraph(string username, string password);
+	void loadGraphFromFiles();
+	void storeGraphIntoFiles();
+	void createFiles();
+	void removeFiles();
+};
+class UserManager
+{
+	vector<UserGraph>users;
+public:
+	void signUp();
+	UserGraph* logIn();
+	void display();
+	void saveAllGraphs();
+	void loadAllGraphs();
+	void deleteGraph();
+	void loadUsers();
+	void saveUsres();
 };

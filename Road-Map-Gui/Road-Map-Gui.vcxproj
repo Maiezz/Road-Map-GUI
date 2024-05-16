@@ -93,17 +93,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <QtUic Include="GraphView.ui" />
-    <QtUic Include="Mainwindow.ui" />
     <QtUic Include="QtApplication1.ui" />
     <QtMoc Include="QtApplication1.h" />
     <ClCompile Include="CountryGraph.cpp" />
     <ClCompile Include="GraphView.cpp" />
-    <ClCompile Include="Mainwindow.cpp" />
     <ClCompile Include="QtApplication1.cpp" />
     <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="Mainwindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CountryGraph.h" />

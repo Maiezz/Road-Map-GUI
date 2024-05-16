@@ -24,13 +24,13 @@ string  stringformat(string str) {
 }
 void ReadFormFiles(CountryGraph& Country)
 {
-    Country.Read_Cities_FromFiles();
-    Country.Read_Edges_FromFiles();
+    Country.Read_Cities_FromFiles("cities.txt");
+    Country.Read_Edges_FromFiles("edges.txt");
 }
 void WriteInFiles(CountryGraph& Country)
 {
-    Country.Write_Cities_InFiles();
-    Country.Write_Edges_InFiles();
+    Country.Write_Cities_InFiles("cities.txt");
+    Country.Write_Edges_InFiles("edges.txt");
 }
 
 GraphViewClass::GraphViewClass(QWidget* parent) :
@@ -371,7 +371,7 @@ void GraphViewClass::showprims()
     queue <pair<string, edge>> msp = Country.Prims();
     // Get the widget inside the scroll area
     QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
-
+    clearLayout(widgetInsideScrollArea);
     // Create a vertical layout to hold labels
     QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
 
@@ -396,7 +396,7 @@ void GraphViewClass::showbfs()
     queue<string> bfs = Country.BFS(start);
     // Get the widget inside the scroll area
     QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
-
+    clearLayout(widgetInsideScrollArea);
     // Create a vertical layout to hold labels
     QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
 
@@ -418,7 +418,7 @@ void GraphViewClass::showdfs()
     queue<string> dfs = Country.DFS(start);
     // Get the widget inside the scroll area
     QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
-
+    clearLayout(widgetInsideScrollArea);
     // Create a vertical layout to hold labels
     QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
 
@@ -439,7 +439,7 @@ void GraphViewClass::showkruksal()
     queue <pair<string, edge>> msp = Country.kruskalMST();
     // Get the widget inside the scroll area
     QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
-
+    clearLayout(widgetInsideScrollArea);
     // Create a vertical layout to hold labels
     QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
 
@@ -459,16 +459,36 @@ void GraphViewClass::showkruksal()
 
 void GraphViewClass::showfloyd()
 {
+    pair<int, vector<string>> path = Country.FloydWarshall2("Cairo", "Giza");
+    vector<string> path_steps = path.second;
+
+    // Get the widget inside the scroll area
+    QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
+    clearLayout(widgetInsideScrollArea);
+    // Create a vertical layout to hold labels
+    QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
+
+    // Loop through the path steps and create labels
+    for (const string& step : path_steps) {
+        QString step_label = QString::fromStdString(step);
+        QLabel* label = new QLabel(step_label, widgetInsideScrollArea);
+        layout->addWidget(label);
+    }
+
+    // Set the layout of the widget inside the scroll area
+    widgetInsideScrollArea->setLayout(layout);
+    
 
 }
 
 void GraphViewClass::showdijkistra()
 {
+    
     string start = "Cairo";
     queue<string> dij = Country.dijkstra_algorithm(start);
     // Get the widget inside the scroll area
     QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
-
+    clearLayout(widgetInsideScrollArea);
     // Create a vertical layout to hold labels
     QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
 
@@ -482,4 +502,19 @@ void GraphViewClass::showdijkistra()
 
     // Set the layout of the widget inside the scroll area
     widgetInsideScrollArea->setLayout(layout);
+}
+
+void GraphViewClass::clearLayout(QWidget* widget)
+{
+    QLayout* layout = widget->layout();
+    if (layout)
+    {
+        QLayoutItem* item;
+        while ((item = layout->takeAt(0)) != nullptr)
+        {
+            delete item->widget();
+            delete item;
+        }
+        delete layout;
+    }
 }

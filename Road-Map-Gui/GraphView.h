@@ -66,4 +66,5 @@ private:
     // Data structure to hold cities and edges
     unordered_map<string, list<edge>> cities;
     QStackedWidget* stackedWidget;
+    void clearLayout(QWidget* widget);
 };

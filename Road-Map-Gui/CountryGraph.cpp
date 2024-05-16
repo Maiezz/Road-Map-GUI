@@ -1,22 +1,177 @@
 #include "CountryGraph.h"
-#include<iostream>
-#include <sstream>
-#include <fstream>
-#include<vector>
-#include<unordered_map>
-#include<unordered_set>
-#include<queue>
-#include<stack>
-#include <set>
+
 using namespace std;
-const float INF = INFINITY;
-
-
-unordered_map<string, list<edge>>& CountryGraph::getCities() {
-
-    return cities;
+// start abdelrahman ahmed :
+UserGraph::UserGraph(string username, string password)
+{
+    this->username = username;
+    this->password = password;
 }
 
+void UserGraph::loadGraphFromFiles()
+{
+    string city = username + "_city.txt";
+    string edge = username + "_edge.txt";
+    graph.Read_Cities_FromFiles(city);
+    graph.Read_Edges_FromFiles(edge);
+}
+
+void UserGraph::storeGraphIntoFiles()
+{
+    string city = username + "_city.txt";
+    string edge = username + "_edge.txt";
+    graph.Write_Cities_InFiles(city);
+    graph.Write_Edges_InFiles(edge);
+}
+
+void UserGraph::createFiles()
+{
+    string city = username + "_city.txt";
+    const char* cityptr = city.c_str();
+    ofstream outfile_city(cityptr);
+    string edge = username + "_edge.txt";
+    const char* edgeptr = edge.c_str();
+    ofstream outfile_edge(edgeptr);
+}
+
+void UserGraph::removeFiles()
+{
+    string city = username + "_city.txt";
+    const char* cityptr = city.c_str();
+    remove(cityptr);
+    string edge = username + "_edge.txt";
+    const char* edgeptr = edge.c_str();
+    remove(edgeptr);
+}
+
+void UserManager::signUp()
+{
+    string username;
+    string password;
+    cout << "Enter username: ";
+    cin >> username;
+    cout << "Enter password: ";
+    cin >> password;
+    for (auto& user : users)
+    {
+        if (user.username == username && user.password == password)
+        {
+            cout << "user already exist, log in with it" << endl;
+            return;
+        }
+    }
+
+    UserGraph newuser(username, password);
+    newuser.createFiles();
+    users.push_back(newuser);
+    cout << "regestrition done now log in" << endl;
+}
+
+UserGraph* UserManager::logIn()
+{
+    string username;
+    string password;
+    cout << "Enter username: ";
+    cin >> username;
+    cout << "Enter password: ";
+    cin >> password;
+    for (auto& user : users)
+    {
+        if (user.username == username && user.password == password)
+        {
+            return &user;
+        }
+    }
+    cout << "can not find user" << endl;
+    return nullptr;
+}
+
+void UserManager::display()
+{
+    cout << "here all usernames\n";
+    for (auto& user : users)
+    {
+        cout << user.username << endl;
+    }
+}
+
+void UserManager::saveAllGraphs()
+{
+    for (auto& user : users)
+    {
+        user.storeGraphIntoFiles();
+    }
+}
+
+void UserManager::loadAllGraphs()
+{
+    for (auto& user : users)
+    {
+        user.loadGraphFromFiles();
+    }
+}
+
+void UserManager::deleteGraph()
+{
+    string username;
+    string password;
+    cout << "Enter username: ";
+    cin >> username;
+    cout << "Enter password: ";
+    cin >> password;
+    for (int i = 0; i < users.size(); i++)
+    {
+        if (users[i].username == username && users[i].password == password)
+        {
+            users[i].removeFiles();
+            users.erase(users.begin() + i);
+            return;
+        }
+    }
+    cout << "user you entered no found\n";
+    display();
+}
+
+void UserManager::loadUsers()
+{
+    string filename = "USRES.txt";
+    ifstream infile(filename);
+    if (!infile.is_open()) {
+        cerr << "Error opening file: " << filename << endl;
+        return;
+    }
+
+    string line;
+    while (getline(infile, line))
+    {
+        vector<string> data_tokens;
+        string token;
+        istringstream tokenStream(line);
+        while (getline(tokenStream, token, ',')) {
+            data_tokens.push_back(token);
+        }
+        UserGraph user(data_tokens[0], data_tokens[1]);
+        users.push_back(user);
+    }
+    infile.close();
+}
+
+void UserManager::saveUsres()
+{
+    string filename = "USRES.txt";
+    ofstream outfile(filename);
+    if (!outfile.is_open()) {
+        cerr << "Error opening file: " << filename << endl;
+        return;
+    }
+    for (auto& user : users)
+    {
+        outfile << user.username << "," << user.password << endl;
+    }
+    outfile.close();
+}
+// End abdelrahman ahmed 
+// start abdelrahman tamer 
 void CountryGraph::AddCity(string newcity) {
 
     cities[newcity];//o(1)
@@ -33,19 +188,19 @@ void CountryGraph::AddEdge(string city_1, string city_2, int cost) {
         cout << "you canot add edge between same city" << endl;
         return;
     }
+    AddCity(city_1);
+    AddCity(city_2);
     if (!FindEdge(city_1, city_2))
     {
-        //cairo alex 10
+
         edge newedge1;
-        newedge1.destination_city = city_1;//cairo
-        newedge1.cost = cost;//10
-        cities[city_2].push_back(newedge1);//o(1)
-        //alex.list(cairo,10)
+        newedge1.destination_city = city_1;
+        newedge1.cost = cost;
+        cities[city_2].push_back(newedge1);
         edge newedge2;
-        newedge2.destination_city = city_2;//alex
-        newedge2.cost = cost;//10
-        cities[city_1].push_back(newedge2);//o(1)
-        //cairo.list(alex,10)
+        newedge2.destination_city = city_2;
+        newedge2.cost = cost;
+        cities[city_1].push_back(newedge2);
 
         if (applychanges)
             undoStack.push({ 1, make_pair(city_1, list<edge>{newedge2}) });
@@ -81,6 +236,22 @@ edge CountryGraph::GetEdge(string city_1, string city_2)
             return edges;
         }
     }
+}
+
+unordered_map<string, list<edge>>& CountryGraph::getCities()
+{
+    return cities;
+}
+
+vector<pair<string, edge>> CountryGraph::getEdges()
+{
+    vector<pair<string, edge>> edges;
+    for (auto& city : cities)
+        for (auto& edge : city.second)
+        {
+            edges.push_back({ city.first , edge });
+        }
+    return edges;
 }
 
 void CountryGraph::DeleteCity(string deletedcity)
@@ -152,21 +323,10 @@ void CountryGraph::DisplayEdges()
 
         }
 }
-vector<pair<string, edge>> CountryGraph::getEdges()
-{
-    vector<pair<string, edge>> edges;
-    for (auto& city : cities)
-        for (auto& edge : city.second)
-        {
-            edges.push_back({ city.first , edge });
-        }
-    return edges;
-}
 
-int CountryGraph::Write_Cities_InFiles()
+int CountryGraph::Write_Cities_InFiles(string filename)
 {
-    string filename = "cities.txt";
-    ofstream clearFile(filename);
+
     ofstream outfile(filename);
     if (!outfile.is_open()) {
         cerr << "Error opening file: " << filename << endl;
@@ -177,13 +337,10 @@ int CountryGraph::Write_Cities_InFiles()
         outfile << city.first << endl;
     }
     outfile.close();
-    cout << " City saved to file: " << filename << endl;
 }
 
-int CountryGraph::Write_Edges_InFiles()
+int CountryGraph::Write_Edges_InFiles(string filename)
 {
-    string filename = "edges.txt";
-    ofstream clearFile(filename);
     ofstream outfile(filename);
     if (!outfile.is_open()) {
         cerr << "Error opening file: " << filename << endl;
@@ -196,13 +353,10 @@ int CountryGraph::Write_Edges_InFiles()
 
         }
     outfile.close();
-    cout << " Edges saved to file: " << filename << endl;
 }
 
-int CountryGraph::Read_Cities_FromFiles()
+int CountryGraph::Read_Cities_FromFiles(string filename)
 {
-    string filename = "cities.txt";
-    vector<string> cities;
     ifstream infile(filename);
     if (!infile.is_open()) {
         cerr << "Error opening file: " << filename << endl;
@@ -212,15 +366,14 @@ int CountryGraph::Read_Cities_FromFiles()
     string line;
     while (getline(infile, line))
     {
-        AddCity(line);
+        if (line != "")
+            AddCity(line);
     }
     infile.close();
 }
 
-int CountryGraph::Read_Edges_FromFiles()
+int CountryGraph::Read_Edges_FromFiles(string filename)
 {
-    string filename = "edges.txt";
-
 
     ifstream infile(filename);
     if (!infile.is_open()) {
@@ -245,6 +398,12 @@ int CountryGraph::Read_Edges_FromFiles()
     infile.close();
 }
 
+bool CountryGraph::is_graphempty()
+{
+    return cities.empty();
+}
+//end abdelrahman tamer
+//start abdelrahman azzat  
 queue<string> CountryGraph::BFS(string start)
 {
     unordered_set<string> visited;
@@ -280,8 +439,8 @@ queue<string> CountryGraph::BFS(string start)
 
     return gui_q;
 }
-
-
+//end abdelrahman azzat 
+//start shahd Hany 
 queue<string> CountryGraph::DFS(string start_city) {
     unordered_map<string, bool> visited;
     stack<string> vertex_stack;
@@ -306,7 +465,8 @@ queue<string> CountryGraph::DFS(string start_city) {
     }
     return path;
 }
-
+//end  shahd Hany
+// start Mai 
 queue<pair<string, edge>> CountryGraph::Prims() {
     // pq sort edges acendingly 
     priority_queue <pair<int, pair<string, string>>, vector<pair<int, pair<string, string>>>, greater<pair<int, pair<string, string>>>> pq;
@@ -354,69 +514,6 @@ queue<pair<string, edge>> CountryGraph::Prims() {
         }
     }
     return path;
-}
-queue<string> CountryGraph::dijkstra_algorithm(string source)//O((V+E)logV)
-{
-
-    unordered_map<string, int> costs; //for sorting each city with it’s updated distance
-    unordered_map<string, bool> visited; // for marking the cities the dijkstra’s_algorithm already visit 
-    unordered_map<string, string> previous_node;
-    priority_queue<pair<int, string>, vector<pair<int, string>>, greater<pair<int, string>>> next_node; // the priority_queue using for sort the nodes using thier costs , we need the next node that one with min distance 
-
-
-    for (auto node : cities) {
-        //set all the distances with infinity value for using it in comparing
-        costs[node.first] = numeric_limits<int>::max();
-        visited[node.first] = 0;
-    }
-
-    costs[source] = 0;
-    previous_node[source] = " The start city";
-    next_node.push({ costs[source], source });
-
-    while (!next_node.empty()) {
-        auto current_city = next_node.top();
-        string current = current_city.second;
-        next_node.pop(); //remove this city cause it already selected (visited)
-        if (!visited[current]) //second---> string in the priority_queue
-        {
-            visited[current] = 1;
-            for (auto neighbours : cities[current]) {
-                if (costs[current] + neighbours.cost < costs[neighbours.destination_city] && !visited[neighbours.destination_city]) {
-
-                    costs[neighbours.destination_city] = costs[current] + neighbours.cost;
-                    previous_node[neighbours.destination_city] = current;
-                    next_node.push({ costs[neighbours.destination_city] ,neighbours.destination_city });
-
-                }
-            }
-        }
-    }
-    cout << "Shortest distances from " << source << ":\n";
-    queue<string>gui;
-    for (auto distance : costs) {
-        string lineforgui = "";
-        lineforgui += distance.first + " : ";
-        if (distance.second == numeric_limits<int>::max())
-        {
-            lineforgui += " it is disconnected city from start city ";
-        }
-        else {
-            lineforgui += to_string(distance.second);
-            if (previous_node[distance.first] == " The start city")
-            {
-                lineforgui += previous_node[distance.first];
-            }
-            else
-            {
-                lineforgui += " from " + previous_node[distance.first];
-            }
-        }
-        gui.push(lineforgui);
-    }
-
-    return gui;
-
 }
 
 void CountryGraph::ReAddCity(pair<string, list<edge>>& city) {
@@ -491,6 +588,141 @@ void CountryGraph::ApplyRChanges(pair<int, pair<string, list<edge>>>& change) {
         break;
     }
     applychanges = true;
+}
+//end Mai 
+//start Safwa 
+queue<string> CountryGraph::dijkstra_algorithm(string source)//O((V+E)logV)
+{
+
+    unordered_map<string, int> costs; //for sorting each city with it’s updated distance
+    unordered_map<string, bool> visited; // for marking the cities the dijkstra’s_algorithm already visit 
+    unordered_map<string, string> previous_node;
+    priority_queue<pair<int, string>, vector<pair<int, string>>, greater<pair<int, string>>> next_node; // the priority_queue using for sort the nodes using thier costs , we need the next node that one with min distance 
+
+
+    for (auto node : cities) {
+        //set all the distances with infinity value for using it in comparing
+        costs[node.first] = numeric_limits<int>::max();
+        visited[node.first] = 0;
+    }
+
+    costs[source] = 0;
+    previous_node[source] = " The start city";
+    next_node.push({ costs[source], source });
+
+    while (!next_node.empty()) {
+        auto current_city = next_node.top();
+        string current = current_city.second;
+        next_node.pop(); //remove this city cause it already selected (visited)
+        if (!visited[current]) //second---> string in the priority_queue
+        {
+            visited[current] = 1;
+            for (auto neighbours : cities[current]) {
+                if (costs[current] + neighbours.cost < costs[neighbours.destination_city] && !visited[neighbours.destination_city]) {
+
+                    costs[neighbours.destination_city] = costs[current] + neighbours.cost;
+                    previous_node[neighbours.destination_city] = current;
+                    next_node.push({ costs[neighbours.destination_city] ,neighbours.destination_city });
+
+                }
+            }
+        }
+    }
+    cout << "Shortest distances from " << source << ":\n";
+    queue<string>gui;
+    for (auto distance : costs) {
+        string lineforgui = "";
+        lineforgui += distance.first + " : ";
+        if (distance.second == numeric_limits<int>::max())
+        {
+            lineforgui += " it is disconnected city from start city ";
+        }
+        else {
+            lineforgui += to_string(distance.second);
+            if (previous_node[distance.first] == " The start city")
+            {
+                lineforgui += previous_node[distance.first];
+            }
+            else
+            {
+                lineforgui += " from " + previous_node[distance.first];
+            }
+        }
+        gui.push(lineforgui);
+    }
+
+    return gui;
+
+}
+// end Safwa
+//start Rana 
+pair<int, vector<string>> CountryGraph::FloydWarshall2(string start_city, string dist_city) {
+    // Create a distance map to store all shortest paths
+    unordered_map<string, unordered_map<string, int>> distance;
+
+    // Create a predecessor map to reconstruct the shortest paths
+    unordered_map<string, unordered_map<string, string>> predecessor_city;
+
+
+    // Initialize the distance and predecessor maps with the graph data
+    for (const auto& city : cities) {
+        distance[city.first] = unordered_map<string, int>();
+        predecessor_city[city.first] = unordered_map<string, string>();
+        for (const auto& edge : city.second) {
+            distance[city.first][edge.destination_city] = edge.cost;
+            predecessor_city[city.first][edge.destination_city] = city.first;
+        }
+        // Set distance to self to 0 and to unconnected cities to infinity
+        distance[city.first][city.first] = 0;
+        for (const auto& otherCity : cities) {
+            if (distance[city.first].count(otherCity.first) == 0) {
+                distance[city.first][otherCity.first] = INT_MAX;
+                predecessor_city[city.first][otherCity.first] = ""; // No path initially
+            }
+        }
+    }
+
+    // Relax all edges by considering intermediate vertices
+    for (const auto& intermediate_city : cities) {
+        for (const auto& source_city : cities) {
+            for (const auto& destination_city : cities) {
+                // If there's a shorter path through the intermediate vertex, update the distance and predecessor
+                if (distance[source_city.first][intermediate_city.first] != INT_MAX &&
+                    distance[intermediate_city.first][destination_city.first] != INT_MAX &&
+                    distance[source_city.first][intermediate_city.first] + distance[intermediate_city.first][destination_city.first] < distance[source_city.first][destination_city.first]) {
+                    distance[source_city.first][destination_city.first] = distance[source_city.first][intermediate_city.first] + distance[intermediate_city.first][destination_city.first];
+                    predecessor_city[source_city.first][destination_city.first] = predecessor_city[intermediate_city.first][destination_city.first];
+                }
+            }
+        }
+    }
+
+    // Get the distance between the start and destination city
+    int dist = distance[start_city][dist_city];
+    vector<string> path;
+    // Print the shortest path
+    cout << "Shortest path from " << start_city << " to " << dist_city << ":" << endl;
+    if (dist == INT_MAX) {
+        cout << "No path exists." << endl;
+    }
+    else {
+        
+        string next_city = dist_city;
+        while (next_city != "") {
+            path.push_back(next_city);
+            next_city = predecessor_city[start_city][next_city];
+        }
+        reverse(path.begin(), path.end());
+        for (const auto& city : path) {
+            cout << city;
+            if (city != dist_city) {
+                cout << " -> ";
+            }
+        }
+
+    }
+
+    return { dist, path};
 }
 
 string CountryGraph::findParent(unordered_map<string, string>& parent, const string& city) {
@@ -580,58 +812,27 @@ queue<pair<string, edge>> CountryGraph::kruskalMST() {
         }
     }
 
-    //// Print the minimum spanning tree
-    //cout << "Minimum Spanning Tree (Kruskal's Algorithm):" << endl;
-    //while (!path.empty()) {
-    //    auto p = path.front();
-    //    path.pop();
-    //    cout << p.first << " -> " << p.second.destination_city << " " << p.second.cost << endl;
-    //}
-    //// Print the minimum cost of the minimum spanning tree
-    //cout << "Minimum Cost of the Minimum Spanning Tree: " << minCost << endl;
-
     return path;
 }
 
-int CountryGraph::FloydWarshall2(string start_city, string dist_city)
+//end Rana
+bool CountryGraph::is_connected()
 {
-    // Create a distance map to store all shortest paths
-    unordered_map<string, unordered_map<string, int>> distance;
-
-    // Initialize the distance map with the graph data
-    for (auto const& city : cities) {
-        distance[city.first] = unordered_map<string, int>();
-        for (auto const& edge : city.second) {
-            distance[city.first][edge.destination_city] = edge.cost;
-        }
-        // Set distance to self and unvisited cities to infinity
-        distance[city.first][city.first] = 0;
-        for (auto const& otherCity : cities) {
-            if (distance[city.first].count(otherCity.first) == 0) {
-                distance[city.first][otherCity.first] = INT_MAX;
-            }
-        }
+    auto it = cities.begin()->first;
+    DFS(it);
+    if (connected)
+    {
+        return true;
     }
-
-    // Relax all edges by considering intermediate vertices
-    for (auto const& intermediate_city : cities) {
-        for (auto const& source_city : cities) {
-            for (auto const& destination_city : cities) {
-                // If there's a shorter path through the intermediate vertex, update the distance
-                if (distance[source_city.first].count(intermediate_city.first) != 0 &&
-                    distance[intermediate_city.first].count(destination_city.first) != 0 &&
-                    distance[source_city.first][intermediate_city.first] != INT_MAX &&
-                    distance[intermediate_city.first][destination_city.first] != INT_MAX &&
-                    distance[source_city.first][intermediate_city.first] + distance[intermediate_city.first][destination_city.first] < distance[source_city.first][destination_city.first]) {
-                    distance[source_city.first][destination_city.first] = distance[source_city.first][intermediate_city.first] + distance[intermediate_city.first][destination_city.first];
-                }
-            }
-        }
+    else
+    {
+        return false;
     }
-
-    int dist = distance[start_city][dist_city];
-    return dist;
 }
+
+
+
+
 
 
 
