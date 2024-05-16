@@ -154,6 +154,7 @@ void GraphViewClass::sub()
         while (cost < 0)
         {
             QMessageBox::warning(this, "Error", "cost must be nonnegative number");
+            ui->road_cost->clear();
             QString costtext = ui->road_cost->text();
             int cost = costtext.toInt();
         }
@@ -169,12 +170,17 @@ void GraphViewClass::sub()
     case 2:// delete city
     {
         QString cityName = ui->city_name1->text();
-        if (cityName.isEmpty()) {
-            QMessageBox::warning(this, "Error", "Please enter a city name.");
-            return;
+        if (Country.FindCity(stringformat(cityName.toStdString()))) {
+            if (cityName.isEmpty()) {
+                QMessageBox::warning(this, "Error", "Please enter a city name.");
+                return;
+            }
+            Country.DeleteCity(stringformat(cityName.toStdString()));
+            drawGraph();
+           
         }
-        Country.DeleteCity(stringformat(cityName.toStdString()));
-        drawGraph();
+        else 
+            QMessageBox::warning(this, "Error", "You can not delete unexisted city ");
         ui->city_name1->clear();
         break;
     }
@@ -193,9 +199,12 @@ void GraphViewClass::sub()
             QMessageBox::warning(this, "Error", "Please enter a city name.");
             return; // Event handled
         }
-
-        Country.DeleteEdge(stringformat(source.toStdString()), stringformat(dest.toStdString()));
-        drawGraph();
+        if (Country.FindEdge(stringformat(source.toStdString()), stringformat(dest.toStdString()))) {
+            Country.DeleteEdge(stringformat(source.toStdString()), stringformat(dest.toStdString()));
+            drawGraph();
+        }
+        else 
+            QMessageBox::warning(this, "Error", "You can not delete unexisted edge ");
         ui->city_name1->clear();
         ui->city_name2->clear();
         break;
@@ -368,140 +377,166 @@ void GraphViewClass::drawGraph()
 
 void GraphViewClass::showprims()
 {
-    queue <pair<string, edge>> msp = Country.Prims();
-    // Get the widget inside the scroll area
-    QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
-    clearLayout(widgetInsideScrollArea);
-    // Create a vertical layout to hold labels
-    QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
+    if (!Country.is_graphempty()) {
+        if (Country.is_connected()) {
+            queue <pair<string, edge>> msp = Country.Prims();
+            // Get the widget inside the scroll area
+            QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
+            clearLayout(widgetInsideScrollArea);
+            // Create a vertical layout to hold labels
+            QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
 
-    // Loop through the queue and create labels
-    while (!msp.empty()) {
-        QString source = QString::fromStdString(msp.front().first);
-        QString dist = QString::fromStdString(msp.front().second.destination_city);
-        QString cost = QString::number(msp.front().second.cost);
-        QLabel* label = new QLabel("From : " + source + "To : " + dist + "By : " + cost, widgetInsideScrollArea);
-        layout->addWidget(label);
-        msp.pop();
+            // Loop through the queue and create labels
+            while (!msp.empty()) {
+                QString source = QString::fromStdString(msp.front().first);
+                QString dist = QString::fromStdString(msp.front().second.destination_city);
+                QString cost = QString::number(msp.front().second.cost);
+                QLabel* label = new QLabel("From : " + source + "To : " + dist + "By : " + cost, widgetInsideScrollArea);
+                layout->addWidget(label);
+                msp.pop();
+            }
+
+            // Set the layout of the widget inside the scroll area
+            widgetInsideScrollArea->setLayout(layout);
+        }
+        else
+            QMessageBox::warning(this, "Error", "You can not apply prims on disconnected graph,use kruksal instead of it");
     }
-
-    // Set the layout of the widget inside the scroll area
-    widgetInsideScrollArea->setLayout(layout);
-
+    else {
+        QMessageBox::warning(this, "Error", "You can not apply prims on empty graph ");
+    }
 }
 
 void GraphViewClass::showbfs()
 {
     string start = "Cairo";
-    queue<string> bfs = Country.BFS(start);
-    // Get the widget inside the scroll area
-    QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
-    clearLayout(widgetInsideScrollArea);
-    // Create a vertical layout to hold labels
-    QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
+    if (Country.FindCity(start)) {
+        queue<string> bfs = Country.BFS(start);
+        // Get the widget inside the scroll area
+        QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
+        clearLayout(widgetInsideScrollArea);
+        // Create a vertical layout to hold labels
+        QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
 
-    // Loop through the queue and create labels
-    while (!bfs.empty()) {
-        QString source = QString::fromStdString(bfs.front());
-        QLabel* label = new QLabel(source, widgetInsideScrollArea);
-        layout->addWidget(label);
-        bfs.pop();
+        // Loop through the queue and create labels
+        while (!bfs.empty()) {
+            QString source = QString::fromStdString(bfs.front());
+            QLabel* label = new QLabel(source, widgetInsideScrollArea);
+            layout->addWidget(label);
+            bfs.pop();
+        }
+
+        // Set the layout of the widget inside the scroll area
+        widgetInsideScrollArea->setLayout(layout);
     }
-
-    // Set the layout of the widget inside the scroll area
-    widgetInsideScrollArea->setLayout(layout);
+    else
+        QMessageBox::warning(this, "Error", "Start city not in the graph");
 }
 
 void GraphViewClass::showdfs()
 {
     string start = "Cairo";
-    queue<string> dfs = Country.DFS(start);
-    // Get the widget inside the scroll area
-    QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
-    clearLayout(widgetInsideScrollArea);
-    // Create a vertical layout to hold labels
-    QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
+    if (Country.FindCity(start)) {
+        queue<string> dfs = Country.DFS(start);
+        // Get the widget inside the scroll area
+        QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
+        clearLayout(widgetInsideScrollArea);
+        // Create a vertical layout to hold labels
+        QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
 
-    // Loop through the queue and create labels
-    while (!dfs.empty()) {
-        QString source = QString::fromStdString(dfs.front());
-        QLabel* label = new QLabel(source, widgetInsideScrollArea);
-        layout->addWidget(label);
-        dfs.pop();
+        // Loop through the queue and create labels
+        while (!dfs.empty()) {
+            QString source = QString::fromStdString(dfs.front());
+            QLabel* label = new QLabel(source, widgetInsideScrollArea);
+            layout->addWidget(label);
+            dfs.pop();
+        }
+
+        // Set the layout of the widget inside the scroll area
+        widgetInsideScrollArea->setLayout(layout);
     }
-
-    // Set the layout of the widget inside the scroll area
-    widgetInsideScrollArea->setLayout(layout);
+    else
+        QMessageBox::warning(this, "Error", "Start city not in the graph");
 }
 
 void GraphViewClass::showkruksal()
 {
-    queue <pair<string, edge>> msp = Country.kruskalMST();
-    // Get the widget inside the scroll area
-    QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
-    clearLayout(widgetInsideScrollArea);
-    // Create a vertical layout to hold labels
-    QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
+    if (!Country.is_graphempty()) {
+        queue <pair<string, edge>> msp = Country.kruskalMST();
+        // Get the widget inside the scroll area
+        QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
+        clearLayout(widgetInsideScrollArea);
+        // Create a vertical layout to hold labels
+        QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
 
-    // Loop through the queue and create labels
-    while (!msp.empty()) {
-        QString source = QString::fromStdString(msp.front().first);
-        QString dist = QString::fromStdString(msp.front().second.destination_city);
-        QString cost = QString::number(msp.front().second.cost);
-        QLabel* label = new QLabel("From : " + source + "To : " + dist + "By : " + cost, widgetInsideScrollArea);
-        layout->addWidget(label);
-        msp.pop();
-    }
+        // Loop through the queue and create labels
+        while (!msp.empty()) {
+            QString source = QString::fromStdString(msp.front().first);
+            QString dist = QString::fromStdString(msp.front().second.destination_city);
+            QString cost = QString::number(msp.front().second.cost);
+            QLabel* label = new QLabel("From : " + source + "To : " + dist + "By : " + cost, widgetInsideScrollArea);
+            layout->addWidget(label);
+            msp.pop();
+        }
 
-    // Set the layout of the widget inside the scroll area
-    widgetInsideScrollArea->setLayout(layout);
+        // Set the layout of the widget inside the scroll area
+        widgetInsideScrollArea->setLayout(layout);
+    }else
+        QMessageBox::warning(this, "Error", "You can not apply kruksal on empty graph ");
 }
 
 void GraphViewClass::showfloyd()
-{
-    pair<int, vector<string>> path = Country.FloydWarshall2("Cairo", "Giza");
-    vector<string> path_steps = path.second;
+{   
+    string city1 = "Cairo";
+    string city2 = "Giza";
+    if (Country.FindCity(city1) and Country.FindCity(city2)) {
+        pair<int, vector<string>> path = Country.FloydWarshall2(city1, city2);
+        vector<string> path_steps = path.second;
 
-    // Get the widget inside the scroll area
-    QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
-    clearLayout(widgetInsideScrollArea);
-    // Create a vertical layout to hold labels
-    QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
+        // Get the widget inside the scroll area
+        QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
+        clearLayout(widgetInsideScrollArea);
+        // Create a vertical layout to hold labels
+        QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
 
-    // Loop through the path steps and create labels
-    for (const string& step : path_steps) {
-        QString step_label = QString::fromStdString(step);
-        QLabel* label = new QLabel(step_label, widgetInsideScrollArea);
-        layout->addWidget(label);
+        // Loop through the path steps and create labels
+        for (const string& step : path_steps) {
+            QString step_label = QString::fromStdString(step);
+            QLabel* label = new QLabel(step_label, widgetInsideScrollArea);
+            layout->addWidget(label);
+        }
+
+        // Set the layout of the widget inside the scroll area
+        widgetInsideScrollArea->setLayout(layout);
     }
-
-    // Set the layout of the widget inside the scroll area
-    widgetInsideScrollArea->setLayout(layout);
-    
-
+    else 
+        QMessageBox::warning(this, "Error", "City one or city two are not founed");
 }
 
 void GraphViewClass::showdijkistra()
 {
-    
-    string start = "Cairo";
-    queue<string> dij = Country.dijkstra_algorithm(start);
-    // Get the widget inside the scroll area
-    QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
-    clearLayout(widgetInsideScrollArea);
-    // Create a vertical layout to hold labels
-    QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
+    if (!Country.is_graphempty()) {
+        string start = "Cairo";
+        queue<string> dij = Country.dijkstra_algorithm(start);
+        // Get the widget inside the scroll area
+        QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
+        clearLayout(widgetInsideScrollArea);
+        // Create a vertical layout to hold labels
+        QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
 
-    // Loop through the queue and create labels
-    while (!dij.empty()) {
-        QString source = QString::fromStdString(dij.front());
-        QLabel* label = new QLabel(source, widgetInsideScrollArea);
-        layout->addWidget(label);
-        dij.pop();
+        // Loop through the queue and create labels
+        while (!dij.empty()) {
+            QString source = QString::fromStdString(dij.front());
+            QLabel* label = new QLabel(source, widgetInsideScrollArea);
+            layout->addWidget(label);
+            dij.pop();
+        }
+
+        // Set the layout of the widget inside the scroll area
+        widgetInsideScrollArea->setLayout(layout);
     }
-
-    // Set the layout of the widget inside the scroll area
-    widgetInsideScrollArea->setLayout(layout);
+    else
+        QMessageBox::warning(this, "Error", "The graph is empty");
 }
 
 void GraphViewClass::clearLayout(QWidget* widget)

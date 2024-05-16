@@ -216,11 +216,13 @@ bool CountryGraph::FindCity(string city)
 
 bool CountryGraph::FindEdge(string city_1, string city_2)
 {
-    for (auto& edges : cities[city_1])
-    {
-        if (edges.destination_city == city_2)
+    if (FindCity(city_1) and FindCity(city_2)) {
+        for (auto& edges : cities[city_1])
         {
-            return true;
+            if (edges.destination_city == city_2)
+            {
+                return true;
+            }
         }
     }
     return false;
@@ -272,8 +274,8 @@ void CountryGraph::DeleteCity(string deletedcity)
 void CountryGraph::DeleteEdge(string city_1, string city_2) //O(E)
 {
 
-    if (FindCity(city_1) and FindCity(city_2))
-    {
+   
+    
         if (applychanges)
             undoStack.push({ 3, make_pair(city_1, list<edge>{GetEdge(city_1, city_2)}) });
 
@@ -285,9 +287,6 @@ void CountryGraph::DeleteEdge(string city_1, string city_2) //O(E)
             return e.destination_city == city_1;
             }), cities[city_2].end());
 
-
-
-    }
 }
 
 void CountryGraph::Delete_AllGraph()
@@ -829,11 +828,3 @@ bool CountryGraph::is_connected()
         return false;
     }
 }
-
-
-
-
-
-
-
-
