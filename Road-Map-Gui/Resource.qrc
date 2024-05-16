@@ -3,5 +3,7 @@
         <file>img/pin2.png</file>
         <file>img/pin.png</file>
         <file>img/international.png</file>
+        <file>img/distance.png</file>
+        <file>img/algorithm_2.png</file>
     </qresource>
 </RCC>

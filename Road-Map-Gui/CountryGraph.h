@@ -68,7 +68,6 @@ public:
 	string username;
 	string	password;
 	CountryGraph graph;
-	UserGraph();
 	UserGraph(string username, string password);
 	void loadGraphFromFiles();
 	void storeGraphIntoFiles();
@@ -77,9 +76,10 @@ public:
 };
 class UserManager
 {
-	vector<UserGraph>users;
+	
 public:
-	void signUp();
+	vector<UserGraph>users;
+	/*void signUp(string , string);*/
 	UserGraph* logIn();
 	void display();
 	void saveAllGraphs();
@@ -87,4 +87,5 @@ public:
 	void deleteGraph();
 	void loadUsers();
 	void saveUsres();
+
 };

@@ -212,9 +212,6 @@ void GraphViewClass::sub()
     }
 }
 
-
-
-///////////////////////////////////////////////////
 void GraphViewClass::Redo()
 {
     Country.Redo();
@@ -392,6 +389,9 @@ void GraphViewClass::showprims()
                 QString dist = QString::fromStdString(msp.front().second.destination_city);
                 QString cost = QString::number(msp.front().second.cost);
                 QLabel* label = new QLabel("From : " + source + "To : " + dist + "By : " + cost, widgetInsideScrollArea);
+                label->setStyleSheet("QLabel { color: white; font-size: 30px; font-family: 'Bahnschrift Condensed'; font-weight: 400; }");
+                // Align text in the center
+                label->setAlignment(Qt::AlignCenter);
                 layout->addWidget(label);
                 msp.pop();
             }
@@ -409,7 +409,16 @@ void GraphViewClass::showprims()
 
 void GraphViewClass::showbfs()
 {
-    string start = "Cairo";
+    // Input dialog to get the start city from the user
+    QString start_city = QInputDialog::getText(this, "Enter Start City", "Start City:");
+    
+
+    if (start_city.isEmpty()) {
+        QMessageBox::warning(this, "Error", "Enter City Name");
+        return;
+    }
+    string start = stringformat(start_city.toStdString());
+
     if (Country.FindCity(start)) {
         queue<string> bfs = Country.BFS(start);
         // Get the widget inside the scroll area
@@ -422,6 +431,9 @@ void GraphViewClass::showbfs()
         while (!bfs.empty()) {
             QString source = QString::fromStdString(bfs.front());
             QLabel* label = new QLabel(source, widgetInsideScrollArea);
+            label->setStyleSheet("QLabel { color: white; font-size: 30px; font-family: 'Bahnschrift Condensed'; font-weight: 400; }");
+            // Align text in the center
+            label->setAlignment(Qt::AlignCenter);
             layout->addWidget(label);
             bfs.pop();
         }
@@ -435,7 +447,15 @@ void GraphViewClass::showbfs()
 
 void GraphViewClass::showdfs()
 {
-    string start = "Cairo";
+    // Input dialog to get the start city from the user
+    QString start_city = QInputDialog::getText(this, "Enter Start City", "Start City:");
+
+
+    if (start_city.isEmpty()) {
+        QMessageBox::warning(this, "Error", "Enter City Name");
+        return;
+    }
+    string start = stringformat(start_city.toStdString());
     if (Country.FindCity(start)) {
         queue<string> dfs = Country.DFS(start);
         // Get the widget inside the scroll area
@@ -448,6 +468,9 @@ void GraphViewClass::showdfs()
         while (!dfs.empty()) {
             QString source = QString::fromStdString(dfs.front());
             QLabel* label = new QLabel(source, widgetInsideScrollArea);
+            label->setStyleSheet("QLabel { color: white; font-size: 30px; font-family: 'Bahnschrift Condensed'; font-weight: 400; }");
+            // Align text in the center
+            label->setAlignment(Qt::AlignCenter);
             layout->addWidget(label);
             dfs.pop();
         }
@@ -475,6 +498,9 @@ void GraphViewClass::showkruksal()
             QString dist = QString::fromStdString(msp.front().second.destination_city);
             QString cost = QString::number(msp.front().second.cost);
             QLabel* label = new QLabel("From : " + source + "To : " + dist + "By : " + cost, widgetInsideScrollArea);
+            label->setStyleSheet("QLabel { color: white; font-size: 30px; font-family: 'Bahnschrift Condensed'; font-weight: 400; }");
+            // Align text in the center
+            label->setAlignment(Qt::AlignCenter);
             layout->addWidget(label);
             msp.pop();
         }
@@ -487,10 +513,26 @@ void GraphViewClass::showkruksal()
 
 void GraphViewClass::showfloyd()
 {   
-    string city1 = "Cairo";
-    string city2 = "Giza";
-    if (Country.FindCity(city1) and Country.FindCity(city2)) {
-        pair<int, vector<string>> path = Country.FloydWarshall2(city1, city2);
+    // Input dialog to get the start city from the user
+    QString start_city = QInputDialog::getText(this, "Enter Start City", "Start City:");
+
+
+    if (start_city.isEmpty()) {
+        QMessageBox::warning(this, "Error", "Enter City Name");
+        return;
+    }
+    string start = stringformat(start_city.toStdString());
+    // Input dialog to get the start city from the user
+    QString des_city = QInputDialog::getText(this, "Enter Destination City", "Destination City:");
+
+
+    if (des_city.isEmpty()) {
+        QMessageBox::warning(this, "Error", "Enter City Name");
+        return;
+    }
+    string des = stringformat(start_city.toStdString());
+    if (Country.FindCity(start) and Country.FindCity(des)) {
+        pair<int, vector<string>> path = Country.FloydWarshall2(start, des);
         vector<string> path_steps = path.second;
 
         // Get the widget inside the scroll area
@@ -503,6 +545,9 @@ void GraphViewClass::showfloyd()
         for (const string& step : path_steps) {
             QString step_label = QString::fromStdString(step);
             QLabel* label = new QLabel(step_label, widgetInsideScrollArea);
+            label->setStyleSheet("QLabel { color: white; font-size: 30px; font-family: 'Bahnschrift Condensed'; font-weight: 400; }");
+            // Align text in the center
+            label->setAlignment(Qt::AlignCenter);
             layout->addWidget(label);
         }
 
@@ -516,7 +561,15 @@ void GraphViewClass::showfloyd()
 void GraphViewClass::showdijkistra()
 {
     if (!Country.is_graphempty()) {
-        string start = "Cairo";
+        // Input dialog to get the start city from the user
+        QString start_city = QInputDialog::getText(this, "Enter Start City", "Start City:");
+
+
+        if (start_city.isEmpty()) {
+            QMessageBox::warning(this, "Error", "Enter City Name");
+            return;
+        }
+        string start = stringformat(start_city.toStdString());
         queue<string> dij = Country.dijkstra_algorithm(start);
         // Get the widget inside the scroll area
         QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
@@ -528,6 +581,9 @@ void GraphViewClass::showdijkistra()
         while (!dij.empty()) {
             QString source = QString::fromStdString(dij.front());
             QLabel* label = new QLabel(source, widgetInsideScrollArea);
+            label->setStyleSheet("QLabel { color: white; font-size: 30px; font-family: 'Bahnschrift Condensed'; font-weight: 400; }");
+            // Align text in the center
+            label->setAlignment(Qt::AlignCenter);
             layout->addWidget(label);
             dij.pop();
         }

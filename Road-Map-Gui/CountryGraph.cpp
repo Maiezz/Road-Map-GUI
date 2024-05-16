@@ -1,4 +1,5 @@
 #include "CountryGraph.h"
+#include <QMessageBox>
 
 using namespace std;
 // start abdelrahman ahmed :
@@ -44,28 +45,28 @@ void UserGraph::removeFiles()
     remove(edgeptr);
 }
 
-void UserManager::signUp()
-{
-    string username;
-    string password;
-    cout << "Enter username: ";
-    cin >> username;
-    cout << "Enter password: ";
-    cin >> password;
-    for (auto& user : users)
-    {
-        if (user.username == username && user.password == password)
-        {
-            cout << "user already exist, log in with it" << endl;
-            return;
-        }
-    }
-
-    UserGraph newuser(username, password);
-    newuser.createFiles();
-    users.push_back(newuser);
-    cout << "regestrition done now log in" << endl;
-}
+//void UserManager::signUp(string username, string password)
+//{
+//    /*string username;
+//    string password;
+//    cout << "Enter username: ";
+//    cin >> username;
+//    cout << "Enter password: ";
+//    cin >> password;*/
+//    for (auto& user : users)
+//    {
+//        if (user.username == username && user.password == password)
+//        {
+//            QMessageBox::warning(this, "Error", "You Already Have an Account");
+//            return;
+//        }
+//    }
+//
+//    UserGraph newuser(username, password);
+//    newuser.createFiles();
+//    users.push_back(newuser);
+//    cout << "regestrition done now log in" << endl;
+//}
 
 UserGraph* UserManager::logIn()
 {
@@ -407,9 +408,12 @@ queue<string> CountryGraph::BFS(string start)
 {
     unordered_set<string> visited;
     queue<string>temp;
+
     queue<string>gui_q;
+    gui_q.push("CITIES IN BFS IS : "); 
+
     visited.insert(start);
-    temp.push(start);
+    temp.push(start); 
     gui_q.push(start);
     int levelsize = 0;
     while (!temp.empty())
@@ -443,21 +447,30 @@ queue<string> CountryGraph::BFS(string start)
 queue<string> CountryGraph::DFS(string start_city) {
     unordered_map<string, bool> visited;
     stack<string> vertex_stack;
-    queue<string>path;
+
+    queue<string>path; //gui
     vertex_stack.push(start_city);
+
+    path.push("CITIES IN DFS IS : ");
+    visited[start_city] = true;
     while (!vertex_stack.empty()) {
+
         string current_city = vertex_stack.top();
+
         vertex_stack.pop();
-        path.push(current_city);
+
         // Process the current city 
-        cout << "city: " << current_city << " ";
-        visited[current_city] = true;
+
+        path.push(current_city);
+
+
         // Explore unvisited neighbors
         for (auto& edge : cities[current_city]) {
             string neighbor_city = edge.destination_city;
             if (!visited[neighbor_city]) {
-                //  visited[neighbor_city] = true;
+
                 vertex_stack.push(neighbor_city);
+                visited[neighbor_city] = true;
             }
         }
 
@@ -627,8 +640,10 @@ queue<string> CountryGraph::dijkstra_algorithm(string source)//O((V+E)logV)
             }
         }
     }
-    cout << "Shortest distances from " << source << ":\n";
+  
+
     queue<string>gui;
+    gui.push("SHORTEST DISTANCES FROM : " + source);
     for (auto distance : costs) {
         string lineforgui = "";
         lineforgui += distance.first + " : ";
@@ -817,14 +832,23 @@ queue<pair<string, edge>> CountryGraph::kruskalMST() {
 //end Rana
 bool CountryGraph::is_connected()
 {
-    auto it = cities.begin()->first;
-    DFS(it);
-    if (connected)
+    unordered_set<string> visited;
+    queue<string> q;
+    auto start_city = cities.begin()->first;
+    q.push(start_city);
+    visited.insert(start_city);
+    while (!q.empty())
     {
-        return true;
+        string current_city = q.front();
+        q.pop();
+        for (const auto& neighbor : cities[current_city])
+        {
+            if (visited.find(neighbor.destination_city) == visited.end())
+            {
+                q.push(neighbor.destination_city);
+                visited.insert(neighbor.destination_city);
+            }
+        }
     }
-    else
-    {
-        return false;
-    }
+    return visited.size() == cities.size();
 }

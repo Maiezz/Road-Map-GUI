@@ -4,6 +4,7 @@
 #include<iostream>
 #include <QFile>
 #include <QTextStream>
+#include <QMessageBox>
 
 QtApplication1::QtApplication1(QWidget* parent)
     : QMainWindow(parent), ui(new Ui::QtApplication1Class)
@@ -16,10 +17,13 @@ QtApplication1::QtApplication1(QWidget* parent)
     connect(ui->loginButton_2, &QPushButton::clicked, this, &QtApplication1::on_loginButton_2_clicked);
     stackedWidget = findChild<QStackedWidget*>("stackedWidget");
     stackedWidget->setVisible(false);
+    manager.loadUsers();
+    manager.loadAllGraphs();
 }
 
 QtApplication1::~QtApplication1()
 {
+    manager.saveUsres();
     delete ui;
 }
 
@@ -31,14 +35,28 @@ void QtApplication1::on_loginButton_clicked()
 
 void QtApplication1::on_loginButton_2_clicked()
 {
-    QString username = ui->loginusername->text();
-    QString password = ui->loginpassword->text();
+    string username = (ui->loginusername->text()).toStdString();
+    string password = (ui->loginpassword->text()).toStdString();
+    bool found = false;
+    for (auto& user : manager.users)
+    {
+        if (user.username == username && user.password == password)
+        {
+            UserLoggedin = &user;
+           found = true;
+           // if user logged in
+           graphview->showMaximized();
+           this->hide();
 
-
-
-    // if user logged in
-    graphview->showMaximized(); // Show the new window 
-    this->hide(); // Hide the current window
+        }
+    }
+    if (!found) {
+        QMessageBox::warning(this, "Error", "You Dont Have an Account Sign in first");
+        ui->loginusername->clear();
+        ui->loginpassword->clear();
+        stackedWidget->setCurrentIndex(0);
+    }
+   
 }
 
 void QtApplication1::on_getstartedButton_clicked()
@@ -49,11 +67,24 @@ void QtApplication1::on_getstartedButton_clicked()
 
 void QtApplication1::on_signupButton_clicked()
 {
-    QString username = ui->signinusername->text();
-    QString password = ui->signinpassword->text();
+    string username = (ui->signinusername->text()).toStdString();
+    string password = (ui->signinpassword->text()).toStdString();
+    
+    for (auto& user : manager.users)
+    {
+        if (user.username == username && user.password == password)
+        {
+            QMessageBox::warning(this, "Error", "You Already Have an Account");
+            ui->signinusername->clear();
+            ui->loginpassword->clear();
+            return;
+        }
+    }
 
-
-    // if user signed in
+    newuser = new UserGraph(username, password);
+    newuser->createFiles();
+    manager.users.push_back(*newuser);
+    QMessageBox::warning(this, "Signed Up Successfully", "Login to your Account");
     stackedWidget->setCurrentIndex(1);
 }
 
