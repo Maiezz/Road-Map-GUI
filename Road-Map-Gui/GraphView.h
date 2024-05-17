@@ -33,12 +33,13 @@ private slots:
     void toalgowindow();
     void tographwindow();
     void sub();
+    void DeleteAll();
     ////////////////
     void showprims();
     void showbfs();
     void showdfs();
     void showkruksal();
-    void showfloyd();
+
     void showdijkistra();
     /////////////////////
 private:

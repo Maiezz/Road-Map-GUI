@@ -16,21 +16,12 @@ public:
     
 
 public slots:
-    void on_signupButton_clicked();
-    void on_loginButton_clicked();
-    void on_loginButton_2_clicked();
     void on_getstartedButton_clicked(); // Slot to handle button click
 
 private:
     Ui::QtApplication1Class* ui;
     GraphViewClass* graphview;  // Declare an instance of the new window
-    QStackedWidget* stackedWidget;
-    UserManager manager;
-    UserGraph *newuser;
-    UserGraph* UserLoggedin;
-
-protected:
-    void closeEvent(QCloseEvent* event) override;
+ 
 };
 
 

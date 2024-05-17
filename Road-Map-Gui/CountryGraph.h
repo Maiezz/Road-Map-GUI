@@ -32,9 +32,6 @@ public:
 	void AddEdge(string city_1, string city_2, int cost);
 	bool FindCity(string city);
 	bool FindEdge(string city_1, string city_2);
-	void DisplayGraph();
-	void DisplayCities();
-	void DisplayEdges();
 	void DeleteCity(string city);
 	void DeleteEdge(string city_1, string city_2);
 	void Delete_AllGraph();
@@ -60,32 +57,6 @@ public:
 	int Write_Cities_InFiles(string);
 	int Write_Edges_InFiles(string);
 	int Read_Cities_FromFiles(string);
-	int Read_Edges_FromFiles(string);
-};
-class UserGraph
-{
-public:
-	string username;
-	string	password;
-	CountryGraph graph;
-	UserGraph(string username, string password);
-	void loadGraphFromFiles();
-	void storeGraphIntoFiles();
-	void createFiles();
-	void removeFiles();
-};
-class UserManager
-{
-	
-public:
-	vector<UserGraph>users;
-	/*void signUp(string , string);*/
-	UserGraph* logIn();
-	void display();
-	void saveAllGraphs();
-	void loadAllGraphs();
-	void deleteGraph();
-	void loadUsers();
-	void saveUsres();
+	int Read_Edges_FromFiles(string); 
 
 };

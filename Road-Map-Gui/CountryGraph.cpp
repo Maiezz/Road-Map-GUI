@@ -2,177 +2,8 @@
 #include <QMessageBox>
 
 using namespace std;
-// start abdelrahman ahmed :
-UserGraph::UserGraph(string username, string password)
-{
-    this->username = username;
-    this->password = password;
-}
 
-void UserGraph::loadGraphFromFiles()
-{
-    string city = username + "_city.txt";
-    string edge = username + "_edge.txt";
-    graph.Read_Cities_FromFiles(city);
-    graph.Read_Edges_FromFiles(edge);
-}
 
-void UserGraph::storeGraphIntoFiles()
-{
-    string city = username + "_city.txt";
-    string edge = username + "_edge.txt";
-    graph.Write_Cities_InFiles(city);
-    graph.Write_Edges_InFiles(edge);
-}
-
-void UserGraph::createFiles()
-{
-    string city = username + "_city.txt";
-    const char* cityptr = city.c_str();
-    ofstream outfile_city(cityptr);
-    string edge = username + "_edge.txt";
-    const char* edgeptr = edge.c_str();
-    ofstream outfile_edge(edgeptr);
-}
-
-void UserGraph::removeFiles()
-{
-    string city = username + "_city.txt";
-    const char* cityptr = city.c_str();
-    remove(cityptr);
-    string edge = username + "_edge.txt";
-    const char* edgeptr = edge.c_str();
-    remove(edgeptr);
-}
-
-//void UserManager::signUp(string username, string password)
-//{
-//    /*string username;
-//    string password;
-//    cout << "Enter username: ";
-//    cin >> username;
-//    cout << "Enter password: ";
-//    cin >> password;*/
-//    for (auto& user : users)
-//    {
-//        if (user.username == username && user.password == password)
-//        {
-//            QMessageBox::warning(this, "Error", "You Already Have an Account");
-//            return;
-//        }
-//    }
-//
-//    UserGraph newuser(username, password);
-//    newuser.createFiles();
-//    users.push_back(newuser);
-//    cout << "regestrition done now log in" << endl;
-//}
-
-UserGraph* UserManager::logIn()
-{
-    string username;
-    string password;
-    cout << "Enter username: ";
-    cin >> username;
-    cout << "Enter password: ";
-    cin >> password;
-    for (auto& user : users)
-    {
-        if (user.username == username && user.password == password)
-        {
-            return &user;
-        }
-    }
-    cout << "can not find user" << endl;
-    return nullptr;
-}
-
-void UserManager::display()
-{
-    cout << "here all usernames\n";
-    for (auto& user : users)
-    {
-        cout << user.username << endl;
-    }
-}
-
-void UserManager::saveAllGraphs()
-{
-    for (auto& user : users)
-    {
-        user.storeGraphIntoFiles();
-    }
-}
-
-void UserManager::loadAllGraphs()
-{
-    for (auto& user : users)
-    {
-        user.loadGraphFromFiles();
-    }
-}
-
-void UserManager::deleteGraph()
-{
-    string username;
-    string password;
-    cout << "Enter username: ";
-    cin >> username;
-    cout << "Enter password: ";
-    cin >> password;
-    for (int i = 0; i < users.size(); i++)
-    {
-        if (users[i].username == username && users[i].password == password)
-        {
-            users[i].removeFiles();
-            users.erase(users.begin() + i);
-            return;
-        }
-    }
-    cout << "user you entered no found\n";
-    display();
-}
-
-void UserManager::loadUsers()
-{
-    string filename = "USRES.txt";
-    ifstream infile(filename);
-    if (!infile.is_open()) {
-        cerr << "Error opening file: " << filename << endl;
-        return;
-    }
-
-    string line;
-    while (getline(infile, line))
-    {
-        vector<string> data_tokens;
-        string token;
-        istringstream tokenStream(line);
-        while (getline(tokenStream, token, ',')) {
-            data_tokens.push_back(token);
-        }
-        UserGraph user(data_tokens[0], data_tokens[1]);
-        users.push_back(user);
-    }
-    infile.close();
-}
-
-void UserManager::saveUsres()
-{
-    string filename = "USRES.txt";
-    ofstream outfile(filename);
-    if (!outfile.is_open()) {
-        cerr << "Error opening file: " << filename << endl;
-        return;
-    }
-    for (auto& user : users)
-    {
-        outfile << user.username << "," << user.password << endl;
-    }
-    outfile.close();
-}
-// End abdelrahman ahmed 
-// start abdelrahman tamer 
 void CountryGraph::AddCity(string newcity) {
 
     cities[newcity];//o(1)
@@ -293,35 +124,6 @@ void CountryGraph::DeleteEdge(string city_1, string city_2) //O(E)
 void CountryGraph::Delete_AllGraph()
 {
     cities.clear();
-}
-
-void CountryGraph::DisplayGraph()
-{
-    for (auto& city : cities)//o(n^2)
-    {
-        cout << "(" << city.first << ")";
-        for (auto& Edges : city.second)
-            cout << "------>" << "(" << Edges.destination_city << "," << Edges.cost << ")";
-        cout << endl;
-    }
-}
-
-void CountryGraph::DisplayCities()
-{
-    for (auto& city : cities)
-    {
-        cout << city.first << endl;
-    }
-}
-
-void CountryGraph::DisplayEdges()
-{
-    for (auto& city : cities)
-        for (auto& edge : city.second)
-        {
-            cout << "(" << city.first << "," << edge.destination_city << "," << edge.cost << ")" << endl;
-
-        }
 }
 
 int CountryGraph::Write_Cities_InFiles(string filename)
@@ -541,9 +343,6 @@ void CountryGraph::Undo() {
         ApplyUChanges(undoStack.top());
         undoStack.pop();
     }
-    else {
-        cout << "Nothing to undo." << endl;
-    }
 }
 
 // Method to redo the last undone operation
@@ -552,9 +351,6 @@ void CountryGraph::Redo() {
         undoStack.push(redoStack.top());
         ApplyRChanges(redoStack.top());
         redoStack.pop();
-    }
-    else {
-        cout << "Nothing to redo." << endl;
     }
 }
 

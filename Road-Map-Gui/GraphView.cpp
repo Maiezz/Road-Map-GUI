@@ -14,6 +14,7 @@
 #include <vector>
 #include <QVBoxLayout>
 #include <String>
+using namespace std;
 string  stringformat(string str) {
     string result = "";
     result += toupper(str[0]);
@@ -64,6 +65,7 @@ GraphViewClass::GraphViewClass(QWidget* parent) :
     connect(ui->undobutton, &QPushButton::clicked, this, &GraphViewClass::Undo);
     connect(ui->deletecitybutton, &QPushButton::clicked, this, &GraphViewClass::DeleteCity);
     connect(ui->deleteedgebutton, &QPushButton::clicked, this, &GraphViewClass::DeleteEdge);
+    connect(ui->deleteall, &QPushButton::clicked, this, &GraphViewClass::DeleteAll);
     connect(ui->Submit, &QPushButton::clicked, this, &GraphViewClass::sub);
     stackedWidget = findChild<QStackedWidget*>("stackedWidget");
     // Connect the QGraphicsView mouse press event to MainWindow
@@ -72,7 +74,7 @@ GraphViewClass::GraphViewClass(QWidget* parent) :
     connect(ui->kruksal, &QPushButton::clicked, this, &GraphViewClass::showkruksal);
     connect(ui->dfs, &QPushButton::clicked, this, &GraphViewClass::showdfs);
     connect(ui->bfs, &QPushButton::clicked, this, &GraphViewClass::showbfs);
-    connect(ui->floyd, &QPushButton::clicked, this, &GraphViewClass::showfloyd);
+  
 
     stackedWidget->setCurrentIndex(0);
     view->installEventFilter(this);
@@ -212,6 +214,18 @@ void GraphViewClass::sub()
     }
 }
 
+void GraphViewClass::DeleteAll()
+{
+    // Display a confirmation message
+    QMessageBox::StandardButton confirmation = QMessageBox::question(this, "Delete Graph", "The graph will be deleted permanently. Are you sure you want to delete it?", QMessageBox::Yes | QMessageBox::No);
+
+    // Check if the user confirmed the deletion
+    if (confirmation == QMessageBox::Yes) {
+        // If confirmed, delete the graph and redraw
+        Country.Delete_AllGraph();
+        drawGraph();
+    }
+}
 void GraphViewClass::Redo()
 {
     Country.Redo();
@@ -245,7 +259,7 @@ bool GraphViewClass::eventFilter(QObject* watched, QEvent* event)
             if (addingCity) {
                 // Add city at the clicked position
                 QString cityName = ui->city_name1->text();
-               
+
                 if (cityName.isEmpty()) {
 
                     QMessageBox::warning(this, "Error", "Please enter a city name.");
@@ -292,12 +306,20 @@ void GraphViewClass::saveCityPositionsToFile()
     for (auto it = cityPositions.constBegin(); it != cityPositions.constEnd(); ++it) {
         QString cityName = it.key();
         QPointF position = it.value();
-        out << cityName << "," << position.x() << "," << position.y() << "\n";
+
+        // Check if the city exists in the graph before writing its position
+        if (Country.FindCity(cityName.toStdString())) {
+            out << cityName << "," << position.x() << "," << position.y() << "\n";
+        }
+        else {
+            qDebug() << "City not found: " << cityName;
+        }
     }
 
     // Close the file
     file.close();
 }
+
 
 void GraphViewClass::readCityPositionsFromFile()
 {
@@ -347,6 +369,12 @@ void GraphViewClass::drawGraph()
             pen.setWidth(5); // Set edge width to 5 (adjust as needed)
             QGraphicsLineItem* edge = scene->addLine(startPos.x(), startPos.y(), endPos.x(), endPos.y(), pen);
             edge->setToolTip(QString("%1 -> %2: %3").arg(QString::fromStdString(source)).arg(QString::fromStdString(edgeInfo.destination_city)).arg(edgeInfo.cost));
+            // Optional: You can also add the cost directly onto the scene
+            QGraphicsSimpleTextItem* costText = scene->addSimpleText(QString::number(edgeInfo.cost));
+            // Calculate the midpoint for the tooltip
+            QPointF midpoint((startPos.x() + endPos.x()) / 2, (startPos.y() + endPos.y()) / 2);
+            costText->setPos(midpoint.x(), midpoint.y());
+            costText->setBrush(Qt::black); // Set text color to black (adjust as needed)
         }
     }
 
@@ -509,53 +537,6 @@ void GraphViewClass::showkruksal()
         widgetInsideScrollArea->setLayout(layout);
     }else
         QMessageBox::warning(this, "Error", "You can not apply kruksal on empty graph ");
-}
-
-void GraphViewClass::showfloyd()
-{   
-    // Input dialog to get the start city from the user
-    QString start_city = QInputDialog::getText(this, "Enter Start City", "Start City:");
-
-
-    if (start_city.isEmpty()) {
-        QMessageBox::warning(this, "Error", "Enter City Name");
-        return;
-    }
-    string start = stringformat(start_city.toStdString());
-    // Input dialog to get the start city from the user
-    QString des_city = QInputDialog::getText(this, "Enter Destination City", "Destination City:");
-
-
-    if (des_city.isEmpty()) {
-        QMessageBox::warning(this, "Error", "Enter City Name");
-        return;
-    }
-    string des = stringformat(start_city.toStdString());
-    if (Country.FindCity(start) and Country.FindCity(des)) {
-        pair<int, vector<string>> path = Country.FloydWarshall2(start, des);
-        vector<string> path_steps = path.second;
-
-        // Get the widget inside the scroll area
-        QWidget* widgetInsideScrollArea = ui->scrollArea->findChild<QWidget*>("scrollAreaWidgetContents");
-        clearLayout(widgetInsideScrollArea);
-        // Create a vertical layout to hold labels
-        QVBoxLayout* layout = new QVBoxLayout(widgetInsideScrollArea);
-
-        // Loop through the path steps and create labels
-        for (const string& step : path_steps) {
-            QString step_label = QString::fromStdString(step);
-            QLabel* label = new QLabel(step_label, widgetInsideScrollArea);
-            label->setStyleSheet("QLabel { color: white; font-size: 30px; font-family: 'Bahnschrift Condensed'; font-weight: 400; }");
-            // Align text in the center
-            label->setAlignment(Qt::AlignCenter);
-            layout->addWidget(label);
-        }
-
-        // Set the layout of the widget inside the scroll area
-        widgetInsideScrollArea->setLayout(layout);
-    }
-    else 
-        QMessageBox::warning(this, "Error", "City one or city two are not founed");
 }
 
 void GraphViewClass::showdijkistra()
